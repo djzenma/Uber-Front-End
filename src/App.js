@@ -17,14 +17,16 @@ class App extends Component{
 
 
     render() {
-        let name = "Bassant";
-        let age = 20;
-        let credit = 17;
+        let riderProfile = {
+            name: "Bassant",
+            age: 20,
+            credit: 17
+        };
         let cancelFee = 10;
 
         return (
             <div className="App">
-                <Rider name={name} age={age} credit={credit} cancelFee={cancelFee}/>
+                <Rider riderProfile={riderProfile} cancelFee={cancelFee}/>
             </div>
         );
     }

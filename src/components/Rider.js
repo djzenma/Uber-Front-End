@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import './../App.css';
-import {MapContainer} from "./Map";
+import MapContainer from "./Map";
 import WelcomeCard from './WelcomeCard';
 import PreviewRide from './PreviewRide';
+import LeftDrawer from './LeftDrawer';
 import {Button, Alert, Card} from 'react-bootstrap';
 
 export class Rider extends Component{
@@ -16,6 +17,8 @@ export class Rider extends Component{
         this.onBeginRide = this.onBeginRide.bind(this);
         this.onCancelRide = this.onCancelRide.bind(this);
         this.onDismissClick = this.onDismissClick.bind(this);
+        this.onMyProfileClick = this.onMyProfileClick.bind(this);
+        this.onMyRidesHistoryClick = this.onMyRidesHistoryClick.bind(this);
 
         this.state = {
             isProcessingRide: false,
@@ -76,6 +79,14 @@ export class Rider extends Component{
             showReceipt: false});
     }
 
+    onMyProfileClick() {
+
+    }
+
+    onMyRidesHistoryClick() {
+
+    }
+
     render() {
         let targetLoc, previewCard = "", btnTxt = "Start a ride!", rideCard, receiptCard;
         if(this.state.isProcessingRide && this.state.isStartLoc) {  // Choosing a starting location
@@ -105,6 +116,9 @@ export class Rider extends Component{
                     <div className="col-4"/>
                     <Card className="col-4">
                         <Card.Body>
+                            <Card.Title>
+                                Nice Ride!
+                            </Card.Title>
                             <Card.Header>
                                 Driver: {this.state.driverName}
                             </Card.Header>
@@ -125,6 +139,9 @@ export class Rider extends Component{
                     <div className="col-4"/>
                     <Card className="col-4">
                         <Card.Body>
+                            <Card.Title>
+                                Receipt
+                            </Card.Title>
                             <Card.Header>
                                 Driver: {this.state.driverName}
                             </Card.Header>
@@ -149,11 +166,19 @@ export class Rider extends Component{
                               onMarkerClicked = {this.onMarkerClicked}
                 />
 
-                {/*Welcome Card*/}
+
+
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-4">
+
+                        {/*Left Drawer*/}
+                        <div className="col mt-3">
+                            <LeftDrawer onMyProfileClick={this.onMyProfileClick}
+                                        onMyRidesHistoryClick={this.onMyRidesHistoryClick}/>
                         </div>{/*col*/}
+
+                        <div className="col-3">
+                        </div>
 
                         <div className="col-4 mt-5">
                             <div hidden={!this.state.isProcessingRide}>
@@ -163,9 +188,11 @@ export class Rider extends Component{
                             </div>
                         </div>
 
+                        {/*Welcome Card*/}
                         <div className="col-3 mt-5">
-                            <WelcomeCard name={this.props.name} age={this.props.age} credit={this.props.credit}/>
+                            <WelcomeCard name={this.props.riderProfile.name} age={this.props.riderProfile.age} credit={this.props.riderProfile.credit}/>
                         </div> {/*col*/}
+
                         <div className="col-1">
                         </div>{/*col*/}
                     </div>{/*row*/}
