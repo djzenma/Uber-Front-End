@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 
-import {Rider} from './components/Rider';
+import {Rider} from './Components/Rider';
 import {GoogleApiWrapper} from "google-maps-react";
 
 const apiKey = "AIzaSyADdCfBug07EnHeVDoRmQExesiwKbgCOC4";

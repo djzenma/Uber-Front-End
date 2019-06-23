@@ -1,23 +1,36 @@
 import React, {Component} from 'react';
 import './../App.css';
-import {MapContainer} from "./Map";
+import MapContainer from "./Map";
 import WelcomeCard from './WelcomeCard';
 import PreviewRide from './PreviewRide';
-import {Button, Alert} from 'react-bootstrap';
+import LeftDrawer from './LeftDrawer';
+import {Button, Alert, Card} from 'react-bootstrap';
 
 export class Rider extends Component{
 
     constructor(props) {
         super(props);
+
         this.onRideClick = this.onRideClick.bind(this);
         this.onMarkerClicked = this.onMarkerClicked.bind(this);
+        this.onPromoCodeEnter = this.onPromoCodeEnter.bind(this);
+        this.onBeginRide = this.onBeginRide.bind(this);
+        this.onCancelRide = this.onCancelRide.bind(this);
+        this.onDismissClick = this.onDismissClick.bind(this);
+        this.onMyProfileClick = this.onMyProfileClick.bind(this);
+        this.onMyRidesHistoryClick = this.onMyRidesHistoryClick.bind(this);
 
         this.state = {
             isProcessingRide: false,
             isStartLoc: false,
             preview: false,
             startLoc: null,
-            endLoc: null
+            endLoc: null,
+            promoCode: null,
+            rideRunning: false,
+            showReceipt: false,
+            driverName: "Hamada Sheraton",
+            fare: 60
         };
     }
 
@@ -41,9 +54,41 @@ export class Rider extends Component{
         }
     }
 
+    onPromoCodeEnter(promo) {
+        this.setState({promoCode: promo});
+    }
+
+    onBeginRide() {
+        this.setState({preview: false, rideRunning: true});
+    }
+
+    onCancelRide() {
+        // TODO:: Get cancelation fee from BE via App.js
+        this.setState({rideRunning: false, showReceipt: true, cancelFee: this.props.cancelFee});
+    }
+
+    onDismissClick() {
+        // Reset the screen
+        this.setState({isProcessingRide: false,
+            isStartLoc: false,
+            preview: false,
+            startLoc: null,
+            endLoc: null,
+            promoCode: null,
+            rideRunning: false,
+            showReceipt: false});
+    }
+
+    onMyProfileClick() {
+
+    }
+
+    onMyRidesHistoryClick() {
+
+    }
 
     render() {
-        let targetLoc, previewCard = "", btnTxt = "Start a ride!";
+        let targetLoc, previewCard = "", btnTxt = "Start a ride!", rideCard, receiptCard;
         if(this.state.isProcessingRide && this.state.isStartLoc) {  // Choosing a starting location
             targetLoc = "Starting";
         }
@@ -54,14 +99,62 @@ export class Rider extends Component{
             previewCard = <div className="row fixed-bottom mb-5" hidden={!this.state.preview}>
                 <div className="col-4"/>
                 <div className="col-4">
-                    <PreviewRide driverName="Hamada Sheraton"
+                    <PreviewRide driverName={this.state.driverName}
                                  startLoc={this.state.startLoc}
                                  endLoc={this.state.endLoc}
-                                 fare={60}
+                                 fare={this.state.fare}
+                                 onPromoCodeChange={this.onPromoCodeEnter}
+                                 onBeginRideClick={this.onBeginRide}
                     />
                 </div>
                 <div className="col-4"/>
             </div>;
+        }
+        else if(this.state.rideRunning) {
+            rideCard =
+                <div className="row fixed-bottom mb-5">
+                    <div className="col-4"/>
+                    <Card className="col-4">
+                        <Card.Body>
+                            <Card.Title>
+                                Nice Ride!
+                            </Card.Title>
+                            <Card.Header>
+                                Driver: {this.state.driverName}
+                            </Card.Header>
+                            <Card.Text>
+                                Expected Fare: {this.state.fare}EGP
+                            </Card.Text>
+                            <Card.Footer>
+                                <Button variant="primary" onClick={this.onCancelRide}>Cancel the Ride</Button>
+                            </Card.Footer>
+                        </Card.Body>
+                    </Card>
+                    <div className="col-4"/>
+                </div>;
+        }
+        else if(this.state.showReceipt) {
+            receiptCard =
+                <div className="row fixed-bottom mb-5">
+                    <div className="col-4"/>
+                    <Card className="col-4">
+                        <Card.Body>
+                            <Card.Title>
+                                Receipt
+                            </Card.Title>
+                            <Card.Header>
+                                Driver: {this.state.driverName}
+                            </Card.Header>
+                            <Card.Text>
+                                Payment: {this.state.cancelFee}
+                            </Card.Text>
+                            <Card.Footer>
+                                <Button variant="primary" onClick={this.onDismissClick}>Dismiss</Button>
+                            </Card.Footer>
+                        </Card.Body>
+                    </Card>
+                    <div className="col-4"/>
+                </div>;
         }
 
 
@@ -73,11 +166,19 @@ export class Rider extends Component{
                               onMarkerClicked = {this.onMarkerClicked}
                 />
 
-                {/*Welcome Card*/}
+
+
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-4">
+
+                        {/*Left Drawer*/}
+                        <div className="col mt-3">
+                            <LeftDrawer onMyProfileClick={this.onMyProfileClick}
+                                        onMyRidesHistoryClick={this.onMyRidesHistoryClick}/>
                         </div>{/*col*/}
+
+                        <div className="col-3">
+                        </div>
 
                         <div className="col-4 mt-5">
                             <div hidden={!this.state.isProcessingRide}>
@@ -87,21 +188,30 @@ export class Rider extends Component{
                             </div>
                         </div>
 
+                        {/*Welcome Card*/}
                         <div className="col-3 mt-5">
-                            <WelcomeCard name={this.props.name} age={this.props.age} credit={this.props.credit}/>
+                            <WelcomeCard name={this.props.riderProfile.name} age={this.props.riderProfile.age} credit={this.props.riderProfile.credit}/>
                         </div> {/*col*/}
+
                         <div className="col-1">
                         </div>{/*col*/}
                     </div>{/*row*/}
 
                     {/*Start ride Btn*/}
-                    <div className="row fixed-bottom mb-5" hidden={this.state.isProcessingRide || this.state.preview}>
+                    <div className="row fixed-bottom mb-5" hidden={this.state.isProcessingRide || this.state.preview || this.state.rideRunning}>
                         <div className="col">
                             <Button variant="primary" onClick={this.onRideClick}>{btnTxt}</Button>
                         </div>
                     </div>
 
+                    {/*Preview The Ride and wait for Beginning*/}
                     {previewCard}
+
+                    {/*Ride running*/}
+                    {rideCard}
+
+                    {/*Receipt*/}
+                    {receiptCard}
 
                 </div>{/*container*/}
 
