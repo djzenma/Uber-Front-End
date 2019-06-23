@@ -20,10 +20,11 @@ class App extends Component{
         let name = "Bassant";
         let age = 20;
         let credit = 17;
+        let cancelFee = 10;
 
         return (
             <div className="App">
-                <Rider name={name} age={age} credit={credit}/>
+                <Rider name={name} age={age} credit={credit} cancelFee={cancelFee}/>
             </div>
         );
     }
