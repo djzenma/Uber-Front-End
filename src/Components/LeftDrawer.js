@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ListItem,
     ListItemText, Drawer,
-    List, Divider} from '@material-ui/core';
+    List} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Icon from '@material-ui/core/icon';
 
@@ -62,7 +62,9 @@ export default class LeftDrawer extends Component {
 
         return (
             <div>
-                <Icon style={{"height": 10+"rem", "color" : "beige"}} onClick={toggleDrawer('left', true)} >reorder</Icon>
+                <div className="bg-white w-50 rounded">
+                    <Icon className="align-self-center mt-1" style={{"color" : "grey"}} onClick={toggleDrawer('left', true)} >reorder</Icon>
+                </div>
                 <Drawer open={this.state.left} onClose={toggleDrawer('left', false)}>
                     {sideList('left')}
                 </Drawer>

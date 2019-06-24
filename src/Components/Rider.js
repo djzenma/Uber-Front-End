@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './../App.css';
 import MapContainer from "./Map";
 import WelcomeCard from './WelcomeCard';
 import PreviewRide from './PreviewRide';
@@ -80,7 +79,7 @@ export class Rider extends Component{
     }
 
     onMyProfileClick() {
-
+        this.props.onRiderProfileClick();
     }
 
     onMyRidesHistoryClick() {
