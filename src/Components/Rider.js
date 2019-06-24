@@ -16,8 +16,6 @@ export class Rider extends Component{
         this.onBeginRide = this.onBeginRide.bind(this);
         this.onCancelRide = this.onCancelRide.bind(this);
         this.onDismissClick = this.onDismissClick.bind(this);
-        this.onMyProfileClick = this.onMyProfileClick.bind(this);
-        this.onMyRidesHistoryClick = this.onMyRidesHistoryClick.bind(this);
 
         this.state = {
             isProcessingRide: false,
@@ -78,13 +76,6 @@ export class Rider extends Component{
             showReceipt: false});
     }
 
-    onMyProfileClick() {
-        this.props.onRiderProfileClick();
-    }
-
-    onMyRidesHistoryClick() {
-        this.props.onRiderRidesHistoryClick();
-    }
 
     render() {
         let targetLoc, previewCard = "", btnTxt = "Start a ride!", rideCard, receiptCard;
@@ -172,8 +163,7 @@ export class Rider extends Component{
 
                         {/*Left Drawer*/}
                         <div className="col mt-3">
-                            <LeftDrawer onMyProfileClick={this.onMyProfileClick}
-                                        onMyRidesHistoryClick={this.onMyRidesHistoryClick}/>
+                            {this.props.leftDrawer}
                         </div>{/*col*/}
 
                         <div className="col-3">
