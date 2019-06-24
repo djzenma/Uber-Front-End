@@ -31,7 +31,12 @@ export default class LeftDrawer extends Component {
 
     listToDrawerList() {
         return this.state.drawerList.map((text, index) => {
-            return (<ListItem button key={text} onClick={() => this.props.onMyProfileClick()}>
+            return (<ListItem button key={text} onClick={() => {
+                if(index === 0)
+                    this.props.onMyProfileClick();
+                else
+                    this.props.onMyRidesHistoryClick();
+            }}>
                 <ListItemText primary={text}/>
             </ListItem>);
         });

@@ -83,7 +83,7 @@ export class Rider extends Component{
     }
 
     onMyRidesHistoryClick() {
-
+        this.props.onRiderRidesHistoryClick();
     }
 
     render() {
