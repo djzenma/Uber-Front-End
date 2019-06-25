@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import MapContainer from "./Map";
 import WelcomeCard from './WelcomeCard';
 import PreviewRide from './PreviewRide';
-import LeftDrawer from './LeftDrawer';
 import {Button, Alert, Card} from 'react-bootstrap';
 
 export class Rider extends Component{

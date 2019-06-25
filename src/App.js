@@ -4,6 +4,7 @@ import './App.css';
 import {Rider} from './Components/Rider';
 import Profile from './Components/Profile';
 import RidesHistory from './Components/RidesHistory';
+import SignIn from './Components/SignInPage';
 import {GoogleApiWrapper} from "google-maps-react";
 import LeftDrawer from "./Components/LeftDrawer";
 
@@ -17,9 +18,11 @@ class App extends Component{
         this.onRiderProfileClick = this.onRiderProfileClick.bind(this);
         this.onRiderRidesHistoryClick = this.onRiderRidesHistoryClick.bind(this);
         this.onMapClick = this.onMapClick.bind(this);
+        this.onLogin = this.onLogin.bind(this);
 
         this.state = {
-            map: true,
+            login: true,
+            map: false,
             profile: false,
             ridesHistory: false
         };
@@ -27,6 +30,7 @@ class App extends Component{
 
     onMapClick() {
         this.setState({
+            login: false,
             map: true,
             profile: false,
             ridesHistory: false
@@ -35,6 +39,7 @@ class App extends Component{
 
     onRiderProfileClick() {
         this.setState({
+            login: false,
             map: false,
             profile: true,
             ridesHistory: false
@@ -43,12 +48,22 @@ class App extends Component{
 
     onRiderRidesHistoryClick() {
         this.setState({
+            login: false,
             map: false,
             profile: false,
             ridesHistory: true
         });
     }
 
+    onLogin() {
+        console.log('login');
+        this.setState({
+            login: false,
+            map: true,
+            profile: false,
+            ridesHistory: false
+        });
+    }
 
     render() {
         let page;
@@ -93,7 +108,9 @@ class App extends Component{
                     </div>
                     <RidesHistory className="clearfix" rides={rides}/>
                 </div>;
-        else
+        else if(this.state.login)
+            page = <SignIn onLogin={() => this.onLogin()}/>;
+        else if(this.state.map)
             page = <Rider riderProfile={riderProfile}
                           cancelFee={cancelFee}
                           leftDrawer={<LeftDrawer onMyProfileClick={this.onRiderProfileClick}
