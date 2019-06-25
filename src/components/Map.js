@@ -25,7 +25,7 @@ class MapContainer extends Component{
             console.log(index);
             return <Marker key={index} id={index} position={{ lat: area.lat, lng: area.lng
             }}
-               onClick={() => this.props.onMarkerClicked(area)} />
+                           onClick={() => this.props.onMarkerClicked(area)} />
         });
     };
 

@@ -5,6 +5,7 @@ import {Rider} from './Components/Rider';
 import Profile from './Components/Profile';
 import RidesHistory from './Components/RidesHistory';
 import SignIn from './Components/SignInPage';
+import {Driver} from './Components/Driver';
 import {GoogleApiWrapper} from "google-maps-react";
 import LeftDrawer from "./Components/LeftDrawer";
 
@@ -74,6 +75,13 @@ class App extends Component{
             email: 'eidma@aucegypt.edu',
             birthDate: '05/12/97'
         };
+        let driverProfile = {
+            name: "3ala2 el 7ara2",
+            age: 70,
+            credit: -2,
+            email: '7ara2@aucegypt.edu',
+            birthDate: '05/12/97'
+        };
         let cancelFee = 10;
         let rides = [
             {   date: '24/06/19',
@@ -120,7 +128,7 @@ class App extends Component{
 
         return (
             <div className="App">
-                {page}
+                <Driver name={driverProfile.name} age={driverProfile.age} credit={driverProfile.credit} rideLocation = "Zamalek" rider ={riderProfile.name} fare ="60" />
             </div>
         );
     }
