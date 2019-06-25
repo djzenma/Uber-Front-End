@@ -8,6 +8,7 @@ import SignIn from './Components/SignInPage';
 import {Driver} from './Components/Driver';
 import {GoogleApiWrapper} from "google-maps-react";
 import LeftDrawer from "./Components/LeftDrawer";
+import Admin from "./Components/Admin";
 
 const apiKey = "AIzaSyADdCfBug07EnHeVDoRmQExesiwKbgCOC4";
 
@@ -128,7 +129,8 @@ class App extends Component{
 
         return (
             <div className="App">
-                <Driver name={driverProfile.name} age={driverProfile.age} credit={driverProfile.credit} rideLocation = "Zamalek" rider ={riderProfile.name} fare ="60" />
+                {/*<Driver name={driverProfile.name} age={driverProfile.age} credit={driverProfile.credit} rideLocation = "Zamalek" rider ={riderProfile.name} fare ="60" />*/}
+                <Admin profile={{name: "Madame Lawa7ez", age: 65}}/>
             </div>
         );
     }
