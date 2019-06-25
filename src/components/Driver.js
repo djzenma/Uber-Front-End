@@ -100,6 +100,9 @@ export class Driver extends Component {
                  <div className="col-1">
                  </div>{/*col*/}
                 </div>{/*row*/}
+
+
+
                  {msg}
                 </div>
                 </div>
