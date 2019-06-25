@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Map, InfoWindow, Marker} from 'google-maps-react';
+import { Map, Marker} from 'google-maps-react';
 
 const mapStyles = {
     width: '100%',
@@ -15,8 +15,10 @@ export class MapContainer extends Component{
             selectedPlace: {
                 name: 'hehe'
             },
-            areas: [{ lat: 30.029778, lng: 31.446361},
-                { lat: 30.030910, lng: 31.453245},]
+            areas: [{ lat: 30.0074, lng: 31.4913}, //New Cairo
+                { lat: 29.928, lng: 30.9188}, // 6th of October
+                { lat: 30.0131, lng: 31.2089},//Giza
+                { lat: 30.0566, lng: 31.3301}] //Nasr City
         };
     }
 

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-
-import {Rider} from './components/Rider';
+import {Driver} from './components/Driver';
 import {GoogleApiWrapper} from "google-maps-react";
 
 const apiKey = "AIzaSyADdCfBug07EnHeVDoRmQExesiwKbgCOC4";
@@ -17,13 +16,13 @@ class App extends Component{
 
 
     render() {
-        let name = "Bassant";
-        let age = 20;
-        let credit = 17;
+        let dName = "Hamada Sheraton";
+        let dAge = 33;
+        let dCredit = 50;
 
         return (
             <div className="App">
-                <Rider name={name} age={age} credit={credit}/>
+               <Driver name={dName} age={dAge} credit={dCredit} rideLocation = "Zamalek" rider = "Mazen" fare ="60" />
             </div>
         );
     }
