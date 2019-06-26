@@ -95,7 +95,7 @@ export class Driver extends Component {
                         <div className="col-1">
                         </div>{/*col*/}
                         <div className="col-3 mt-5">
-                            <WelcomeCard name={this.props.name} age={this.props.age} credit={this.props.credit}  />
+                            <WelcomeCard name={this.props.profile.name} age={this.props.profile.age} credit={this.props.profile.credit}  />
                         </div> {/*col*/}
                         <div className="col-1">
                         </div>{/*col*/}
