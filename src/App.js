@@ -5,6 +5,7 @@ import {Rider} from './Components/Rider';
 import Profile from './Components/Profile';
 import RidesHistory from './Components/RidesHistory';
 import SignIn from './Components/SignInPage';
+import SignUp from './Components/SignUpPage';
 import {Driver} from './Components/Driver';
 import {GoogleApiWrapper} from "google-maps-react";
 import LeftDrawer from "./Components/LeftDrawer";
@@ -20,19 +21,27 @@ class App extends Component{
         this.onRiderRidesHistoryClick = this.onRiderRidesHistoryClick.bind(this);
         this.onMapClick = this.onMapClick.bind(this);
         this.onLogin = this.onLogin.bind(this);
+        this.onSignUp = this.onSignUp.bind(this);
+        this.onRedirectToSignIn = this.onRedirectToSignIn.bind(this);
+        this.onRedirectToSignUp = this.onRedirectToSignUp.bind(this);
 
         this.state = {
-            login: true,
-            map: false,
+            login: false,
+            signUp: true,
+            rider: false,
+            driver: false,
             profile: false,
-            ridesHistory: false
+            ridesHistory: false,
+            role: 'rider'
         };
     }
 
     onMapClick() {
         this.setState({
             login: false,
-            map: true,
+            signUp: false,
+            rider: true,
+            driver: false,
             profile: false,
             ridesHistory: false
         });
@@ -41,7 +50,9 @@ class App extends Component{
     onRiderProfileClick() {
         this.setState({
             login: false,
-            map: false,
+            signUp: false,
+            rider: false,
+            driver: false,
             profile: true,
             ridesHistory: false
         });
@@ -50,17 +61,79 @@ class App extends Component{
     onRiderRidesHistoryClick() {
         this.setState({
             login: false,
-            map: false,
+            signUp: false,
+            rider: false,
+            driver: false,
             profile: false,
             ridesHistory: true
         });
     }
 
-    onLogin() {
-        console.log('login');
+    onLogin(credentials) {
+        const role = credentials.role;
+        if(role === 'rider')
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: true,
+                driver: false,
+                profile: false,
+                ridesHistory: false,
+                role: role
+            });
+        else if(role === 'driver')
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: false,
+                driver: true,
+                profile: false,
+                ridesHistory: false,
+                role: role
+            });
+    }
+
+    onSignUp(credentials) {
+        const role = credentials.role;
+        if(role === 'rider')
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: true,
+                driver: false,
+                profile: false,
+                ridesHistory: false,
+                role: role
+            });
+        else if(role === 'driver')
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: false,
+                driver: true,
+                profile: false,
+                ridesHistory: false,
+                role: role
+            });
+    }
+
+    onRedirectToSignIn() {
+        this.setState({
+            login: true,
+            signUp: false,
+            rider: false,
+            driver: false,
+            profile: false,
+            ridesHistory: false
+        });
+    }
+
+    onRedirectToSignUp() {
         this.setState({
             login: false,
-            map: true,
+            signUp: true,
+            rider: false,
+            driver: false,
             profile: false,
             ridesHistory: false
         });
@@ -96,7 +169,13 @@ class App extends Component{
             }
         ];
 
-        if(this.state.profile)
+        if(this.state.login)
+            page = <SignIn onLogin={this.onLogin} onRedirectToSignUp={this.onRedirectToSignUp}/>;
+
+        else if(this.state.signUp)
+            page = <SignUp onSignUp={this.onSignUp} onRedirectToSignIn={this.onRedirectToSignIn}/>;
+
+        else if(this.state.profile)
             page =
                 <div className="container-fluid">
                     <div className="row m-3">
@@ -106,6 +185,7 @@ class App extends Component{
                     </div>
                     <Profile profile={riderProfile}/>
                 </div>;
+
         else if(this.state.ridesHistory)
             page =
                 <div className="container-fluid">
@@ -116,9 +196,8 @@ class App extends Component{
                     </div>
                     <RidesHistory className="clearfix" rides={rides}/>
                 </div>;
-        else if(this.state.login)
-            page = <SignIn onLogin={() => this.onLogin()}/>;
-        else if(this.state.map)
+
+        else if(this.state.rider)
             page = <Rider riderProfile={riderProfile}
                           cancelFee={cancelFee}
                           leftDrawer={<LeftDrawer onMyProfileClick={this.onRiderProfileClick}
@@ -126,9 +205,12 @@ class App extends Component{
                                                   onMapClick={this.onMapClick}/>}
                     />;
 
+        else if(this.state.driver)
+            page = <Driver rideLocation="Embaba" fare={30} rider="Lawa7ez" profile={driverProfile}/>;
+
         return (
             <div className="App">
-                <Driver name={driverProfile.name} age={driverProfile.age} credit={driverProfile.credit} rideLocation = "Zamalek" rider ={riderProfile.name} fare ="60" />
+                {page}
             </div>
         );
     }

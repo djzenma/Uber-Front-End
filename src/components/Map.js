@@ -22,7 +22,6 @@ class MapContainer extends Component{
 
     displayMarkers = () => {
         return this.state.areas.map((area, index) => {
-            console.log(index);
             return <Marker key={index} id={index} position={{ lat: area.lat, lng: area.lng
             }}
                            onClick={() => this.props.onMarkerClicked(area)} />
