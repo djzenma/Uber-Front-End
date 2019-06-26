@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Button} from "react-bootstrap";
 import {Divider} from "@material-ui/core";
-import {Driver} from "./Driver";
 import WelcomeCard from "./WelcomeCard";
 
 export  default class Admin extends Component {

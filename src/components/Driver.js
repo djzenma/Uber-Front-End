@@ -92,12 +92,11 @@ export class Driver extends Component {
                                 Select Your current Location!
                             </Alert>
                         </div>
-                        <div className="col-1">
-                        </div>{/*col*/}
+
                         <div className="col-3 mt-5">
                             <WelcomeCard name={this.props.profile.name} age={this.props.profile.age} credit={this.props.profile.credit}  />
                         </div> {/*col*/}
-                        <div className="col-1">
+                        <div className="col-2">
                         </div>{/*col*/}
                     </div>{/*row*/}
 

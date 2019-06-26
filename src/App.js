@@ -9,6 +9,7 @@ import SignUp from './Components/SignUpPage';
 import {Driver} from './Components/Driver';
 import {GoogleApiWrapper} from "google-maps-react";
 import LeftDrawer from "./Components/LeftDrawer";
+import Admin from './Components/Admin';
 
 const apiKey = "AIzaSyADdCfBug07EnHeVDoRmQExesiwKbgCOC4";
 
@@ -31,6 +32,7 @@ class App extends Component{
             rider: false,
             driver: false,
             profile: false,
+            admin: false,
             ridesHistory: false,
             role: 'rider'
         };
@@ -43,6 +45,7 @@ class App extends Component{
                 signUp: false,
                 rider: true,
                 driver: false,
+                admin: false,
                 profile: false,
                 ridesHistory: false
             });
@@ -52,6 +55,17 @@ class App extends Component{
                 signUp: false,
                 rider: false,
                 driver: true,
+                admin: false,
+                profile: false,
+                ridesHistory: false
+            });
+        else
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: false,
+                driver: false,
+                admin: true,
                 profile: false,
                 ridesHistory: false
             });
@@ -63,6 +77,7 @@ class App extends Component{
             signUp: false,
             rider: false,
             driver: false,
+            admin: false,
             profile: true,
             ridesHistory: false
         });
@@ -74,6 +89,7 @@ class App extends Component{
             signUp: false,
             rider: false,
             driver: false,
+            admin: false,
             profile: false,
             ridesHistory: true
         });
@@ -87,6 +103,7 @@ class App extends Component{
                 signUp: false,
                 rider: true,
                 driver: false,
+                admin: false,
                 profile: false,
                 ridesHistory: false,
                 role: role
@@ -97,6 +114,18 @@ class App extends Component{
                 signUp: false,
                 rider: false,
                 driver: true,
+                admin: false,
+                profile: false,
+                ridesHistory: false,
+                role: role
+            });
+        else
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: false,
+                driver: false,
+                admin: true,
                 profile: false,
                 ridesHistory: false,
                 role: role
@@ -111,6 +140,7 @@ class App extends Component{
                 signUp: false,
                 rider: true,
                 driver: false,
+                admin: false,
                 profile: false,
                 ridesHistory: false,
                 role: role
@@ -121,6 +151,18 @@ class App extends Component{
                 signUp: false,
                 rider: false,
                 driver: true,
+                admin: false,
+                profile: false,
+                ridesHistory: false,
+                role: role
+            });
+        else
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: false,
+                driver: false,
+                admin: true,
                 profile: false,
                 ridesHistory: false,
                 role: role
@@ -133,6 +175,7 @@ class App extends Component{
             signUp: false,
             rider: false,
             driver: false,
+            admin: false,
             profile: false,
             ridesHistory: false
         });
@@ -144,6 +187,7 @@ class App extends Component{
             signUp: true,
             rider: false,
             driver: false,
+            admin: false,
             profile: false,
             ridesHistory: false
         });
@@ -229,6 +273,9 @@ class App extends Component{
                         </div>
                     </div>
                 </div>;
+
+        else if(this.state.admin)
+            page = <Admin profile={driverProfile}/>;
 
         return (
             <div className="App">
