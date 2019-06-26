@@ -37,14 +37,24 @@ class App extends Component{
     }
 
     onMapClick() {
-        this.setState({
-            login: false,
-            signUp: false,
-            rider: true,
-            driver: false,
-            profile: false,
-            ridesHistory: false
-        });
+        if(this.state.role === 'rider')
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: true,
+                driver: false,
+                profile: false,
+                ridesHistory: false
+            });
+        else if(this.state.role === 'driver')
+            this.setState({
+                login: false,
+                signUp: false,
+                rider: false,
+                driver: true,
+                profile: false,
+                ridesHistory: false
+            });
     }
 
     onRiderProfileClick() {
@@ -206,7 +216,19 @@ class App extends Component{
                     />;
 
         else if(this.state.driver)
-            page = <Driver rideLocation="Embaba" fare={30} rider="Lawa7ez" profile={driverProfile}/>;
+            page =
+                <div>
+                    <Driver rideLocation="Embaba" fare={30} rider="Lawa7ez" profile={driverProfile}/>
+                    <div className="container-fluid fixed-top mt-3">
+                        <div className="row">
+                            <div className="col-1">
+                                <LeftDrawer onMyProfileClick={this.onRiderProfileClick}
+                                        onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
+                                        onMapClick={this.onMapClick}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>;
 
         return (
             <div className="App">

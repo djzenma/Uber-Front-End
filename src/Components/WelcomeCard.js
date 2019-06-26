@@ -6,7 +6,6 @@ class WelcomeCard extends Component {
         return(
             <div>
                 <Card>
-                    <Card.Img variant="top" src="holder.js/100px180" />
                     <Card.Body>
                         <Card.Title>Hello {this.props.name}!</Card.Title>
                         <Card.Header>
