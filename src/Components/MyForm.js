@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
-import {Divider} from "@material-ui/core";
+import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 
 export default class MyForm extends Component {
@@ -22,15 +23,24 @@ export default class MyForm extends Component {
 
     render() {
         return (
-            <div>
-                <Form className ="w-50 mx-auto">
-                    <h2 className ="h2">{this.props.heading}</h2>
-                    {this.displayFormGroups()}
-                    <Button variant={this.props.btnColor} type="submit">
-                        {this.props.btnTxt}
-                    </Button>
-                </Form>
-                <Divider className="mt-2"/>
+            <div className="w-100 mb-3">
+                <ExpansionPanel>
+                    <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header">
+
+                        <h3 className="h5">{this.props.heading}</h3>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Form className="w-100">
+                            {this.displayFormGroups()}
+                            <Button variant={this.props.btnColor} type="submit">
+                                {this.props.btnTxt}
+                            </Button>
+                        </Form>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
             </div>
         );
     }

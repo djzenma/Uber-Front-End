@@ -2,31 +2,35 @@ import React, {Component} from 'react';
 import '../App.css';
 import WelcomeCard from "./WelcomeCard";
 import MyForm from './MyForm';
+import {Paper} from '@material-ui/core';
 
 export  default class Admin extends Component {
 
-    constructor(props) { //con
+    constructor(props) {
         super(props);
 
     }
 
-    render() {  ///ren
+    render() {
         return (
             <div className="w-100 container-fluid">
                 <div className="row">
                     <div className="col-7 row unsplashImage">
                         <div className="col-1"/>
-                        <WelcomeCard className="col-4" name={this.props.profile.name} age={this.props.profile.age} />
+                        <div className="mt-3">
+                            <WelcomeCard className="col-4" name={this.props.profile.name} age={this.props.profile.age} />
+                        </div>
                     </div>
 
-                    <div className="col-5">
-                        <h1 className="h1 text-danger">Administrator</h1>
+                    <Paper className="col-5" elevation={6}>
+                        <h1 className="h2 text-danger mt-3">Administrator</h1>
 
                         {/* Add Admin*/}
                         <MyForm heading="Add Admin" formGroups={[
                             {id:"formBasicEmail", label: "Email address", type: "email", placeHolder: "Enter email"},
                             {id:"formBasicPassword", label: "Password", type: "password", placeHolder: "Password"}]}
                                 btnColor="primary" btnTxt="Add"/>
+
 
                         {/* Delete Admin*/}
                         <MyForm heading="Remove Admin" formGroups={[
@@ -72,7 +76,7 @@ export  default class Admin extends Component {
                             {id:"formBasicEmail9", label: "Code", type: "text", placeHolder: "Enter Code"},
                             {id:"formBasicPassword9", label: "New Amount", type: "number", placeHolder: "Amount"}]}
                                 btnColor="success" btnTxt="Add"/>
-                    </div>
+                    </Paper>
                 </div>
 
             </div>

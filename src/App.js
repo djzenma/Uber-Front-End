@@ -27,8 +27,8 @@ class App extends Component{
         this.onRedirectToSignUp = this.onRedirectToSignUp.bind(this);
 
         this.state = {
-            login: false,
-            signUp: true,
+            login: true,
+            signUp: false,
             rider: false,
             driver: false,
             profile: false,
