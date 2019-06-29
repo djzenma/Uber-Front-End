@@ -23,7 +23,7 @@ export  default class Admin extends Component {
                     </div>
 
                     <Paper className="col-5" elevation={6}>
-                        <h1 className="h2 text-danger mt-3">Administrator</h1>
+                        <h1 className="h2 text-danger mt-3 mb-3">Administrator</h1>
 
                         {/* Add Admin*/}
                         <MyForm heading="Add Admin" formGroups={[

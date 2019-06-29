@@ -81,6 +81,6 @@
   border-bottom-right-radius: .3rem; }
 
 .unsplashImage {
+  background-size: cover;
   background: url("https://source.unsplash.com/random"), no-repeat, center;
-  background-size: auto;
 }

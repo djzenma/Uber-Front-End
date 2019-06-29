@@ -131,12 +131,6 @@ export default function SignUp(params) {
                                     label="Driver"
                                     labelPlacement="top"
                                 />
-                                <FormControlLabel
-                                    value="admin"
-                                    control={<Radio color="primary" />}
-                                    label="Admin"
-                                    labelPlacement="top"
-                                />
                             </RadioGroup>
                         </FormControl>
 

@@ -11,7 +11,10 @@ import {GoogleApiWrapper} from "google-maps-react";
 import LeftDrawer from "./Components/LeftDrawer";
 import Admin from './Components/Admin';
 
+const path = require('path');
+
 const apiKey = "AIzaSyADdCfBug07EnHeVDoRmQExesiwKbgCOC4";
+const baseUrl = 'localhost:3000/';
 
 class App extends Component{
 
@@ -34,7 +37,8 @@ class App extends Component{
             profile: false,
             admin: false,
             ridesHistory: false,
-            role: 'rider'
+            role: 'rider',
+            profileInfo: {}
         };
     }
 
@@ -96,39 +100,51 @@ class App extends Component{
     }
 
     onLogin(credentials) {
-        const role = credentials.role;
-        if(role === 'rider')
-            this.setState({
-                login: false,
-                signUp: false,
-                rider: true,
-                driver: false,
-                admin: false,
-                profile: false,
-                ridesHistory: false,
-                role: role
-            });
-        else if(role === 'driver')
-            this.setState({
-                login: false,
-                signUp: false,
-                rider: false,
-                driver: true,
-                admin: false,
-                profile: false,
-                ridesHistory: false,
-                role: role
-            });
-        else
-            this.setState({
-                login: false,
-                signUp: false,
-                rider: false,
-                driver: false,
-                admin: true,
-                profile: false,
-                ridesHistory: false,
-                role: role
+        fetch( path.join(baseUrl, 'auth'), { method: 'GET', body: credentials})
+            .then((res)=> {
+                console.log(res);
+                if(res.status === 200) {    // If auth succeeded
+                    const role = credentials.role;
+                    if (role === 'rider')
+                        this.setState({
+                            login: false,
+                            signUp: false,
+                            rider: true,
+                            driver: false,
+                            admin: false,
+                            profile: false,
+                            ridesHistory: false,
+                            role: role,
+                            profileInfo: res
+                        });
+                    else if (role === 'driver')
+                        this.setState({
+                            login: false,
+                            signUp: false,
+                            rider: false,
+                            driver: true,
+                            admin: false,
+                            profile: false,
+                            ridesHistory: false,
+                            role: role,
+                            profileInfo: res
+                        });
+                    else
+                        this.setState({
+                            login: false,
+                            signUp: false,
+                            rider: false,
+                            driver: false,
+                            admin: true,
+                            profile: false,
+                            ridesHistory: false,
+                            role: role,
+                            profileInfo: res
+                        });
+                }
+            })
+            .catch((e)=>{   // Failed
+                console.log(e);
             });
     }
 
@@ -195,13 +211,7 @@ class App extends Component{
 
     render() {
         let page;
-        let riderProfile = {
-            name: "Mazen",
-            age: 21,
-            credit: 107,
-            email: 'eidma@aucegypt.edu',
-            birthDate: '05/12/97'
-        };
+
         let driverProfile = {
             name: "3ala2 el 7ara2",
             age: 70,
@@ -237,7 +247,7 @@ class App extends Component{
                                     onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
                                     onMapClick={this.onMapClick}/>
                     </div>
-                    <Profile profile={riderProfile}/>
+                    <Profile profile={this.state.profileInfo}/>
                 </div>;
 
         else if(this.state.ridesHistory)
@@ -252,7 +262,7 @@ class App extends Component{
                 </div>;
 
         else if(this.state.rider)
-            page = <Rider riderProfile={riderProfile}
+            page = <Rider riderProfile={this.state.profileInfo}
                           cancelFee={cancelFee}
                           leftDrawer={<LeftDrawer onMyProfileClick={this.onRiderProfileClick}
                                                    onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
@@ -275,7 +285,7 @@ class App extends Component{
                 </div>;
 
         else if(this.state.admin)
-            page = <Admin profile={driverProfile}/>;
+            page = <Admin profile={this.state.profileInfo}/>;
 
         return (
             <div className="App">
