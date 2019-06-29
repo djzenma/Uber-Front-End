@@ -59,6 +59,7 @@ export default function SignInSide(params) {
     });
 
     const submitLogin = (e) => {
+        e.preventDefault();
         params.onLogin(value);
     };
 

@@ -14,7 +14,7 @@ import Admin from './Components/Admin';
 const path = require('path');
 
 const apiKey = "AIzaSyADdCfBug07EnHeVDoRmQExesiwKbgCOC4";
-const baseUrl = 'localhost:3000/';
+const baseUrl = 'http://localhost:3000';
 
 class App extends Component{
 
@@ -100,9 +100,26 @@ class App extends Component{
     }
 
     onLogin(credentials) {
-        fetch( path.join(baseUrl, 'auth'), { method: 'GET', body: credentials})
+        const url = 'http://localhost:3000/auth';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials)}
+                )
             .then((res)=> {
-                console.log(res);
+                res.json()
+                    .then((resJson)=> {
+                        console.log(resJson);
+                        let profile = resJson;
+                        profile.birthDate = resJson.bdate;
+                        profile.age = new Date().getFullYear() - parseInt(resJson.bdate.substr(0,4));
+                        this.setState({
+                            profileInfo: resJson
+                        });
+                    }).catch((er)=> console.log(er));
+
                 if(res.status === 200) {    // If auth succeeded
                     const role = credentials.role;
                     if (role === 'rider')
@@ -114,8 +131,7 @@ class App extends Component{
                             admin: false,
                             profile: false,
                             ridesHistory: false,
-                            role: role,
-                            profileInfo: res
+                            role: role
                         });
                     else if (role === 'driver')
                         this.setState({
@@ -126,8 +142,7 @@ class App extends Component{
                             admin: false,
                             profile: false,
                             ridesHistory: false,
-                            role: role,
-                            profileInfo: res
+                            role: role
                         });
                     else
                         this.setState({
@@ -138,8 +153,7 @@ class App extends Component{
                             admin: true,
                             profile: false,
                             ridesHistory: false,
-                            role: role,
-                            profileInfo: res
+                            role: role
                         });
                 }
             })
@@ -149,40 +163,56 @@ class App extends Component{
     }
 
     onSignUp(credentials) {
-        const role = credentials.role;
-        if(role === 'rider')
-            this.setState({
-                login: false,
-                signUp: false,
-                rider: true,
-                driver: false,
-                admin: false,
-                profile: false,
-                ridesHistory: false,
-                role: role
-            });
-        else if(role === 'driver')
-            this.setState({
-                login: false,
-                signUp: false,
-                rider: false,
-                driver: true,
-                admin: false,
-                profile: false,
-                ridesHistory: false,
-                role: role
-            });
-        else
-            this.setState({
-                login: false,
-                signUp: false,
-                rider: false,
-                driver: false,
-                admin: true,
-                profile: false,
-                ridesHistory: false,
-                role: role
-            });
+        const url = 'http://localhost:3000/auth/signup';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials)}
+        )
+        .then((res)=> {
+            if(res.status === 200) {
+                credentials.age = new Date().getFullYear() - parseInt(credentials.bdate.substr(0,4));
+                const role = credentials.role;
+                if(role === 'rider')
+                    this.setState({
+                        login: false,
+                        signUp: false,
+                        rider: true,
+                        driver: false,
+                        admin: false,
+                        profile: false,
+                        ridesHistory: false,
+                        role: role,
+                        profileInfo: credentials
+                    });
+                else if(role === 'driver')
+                    this.setState({
+                        login: false,
+                        signUp: false,
+                        rider: false,
+                        driver: true,
+                        admin: false,
+                        profile: false,
+                        ridesHistory: false,
+                        role: role,
+                        profileInfo: credentials
+                    });
+                else
+                    this.setState({
+                        login: false,
+                        signUp: false,
+                        rider: false,
+                        driver: false,
+                        admin: true,
+                        profile: false,
+                        ridesHistory: false,
+                        role: role,
+                        profileInfo: credentials
+                    });
+            }
+        });
     }
 
     onRedirectToSignIn() {
@@ -272,7 +302,7 @@ class App extends Component{
         else if(this.state.driver)
             page =
                 <div>
-                    <Driver rideLocation="Embaba" fare={30} rider="Lawa7ez" profile={driverProfile}/>
+                    <Driver rideLocation="Embaba" fare={30} rider="Lawa7ez" profile={this.state.profileInfo}/>
                     <div className="container-fluid fixed-top mt-3">
                         <div className="row">
                             <div className="col-1">

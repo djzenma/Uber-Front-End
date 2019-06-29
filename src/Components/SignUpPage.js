@@ -54,11 +54,12 @@ export default function SignUp(params) {
         role: 'rider',
         email: '',
         password: '',
-        fname: '',
-        lname: ''
+        name: '',
+        bdate: ''
     });
 
     const submitSignUp = (e) => {
+        e.preventDefault();
         params.onSignUp(value);
     };
 
@@ -86,14 +87,14 @@ export default function SignUp(params) {
     function handleFnameChange(event) {
         const fnameVal = event.target.value;
         setValue(prevState =>{
-            return {...prevState, fname: fnameVal};
+            return {...prevState, name: fnameVal};
         });
     }
 
     function handleLnameChange(event) {
         const lnameVal = event.target.value;
         setValue(prevState =>{
-            return {...prevState, lname: lnameVal};
+            return {...prevState, bdate: lnameVal};
         });
     }
 
@@ -138,13 +139,13 @@ export default function SignUp(params) {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    autoComplete="fname"
-                                    name="firstName"
+                                    autoComplete="name"
+                                    name="name"
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="firstName"
-                                    label="First Name"
+                                    id="name"
+                                    label="Name"
                                     autoFocus
                                     onChange={handleFnameChange}
                                 />
@@ -154,10 +155,10 @@ export default function SignUp(params) {
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="lname"
+                                    id="bdate"
+                                    label="Birth Date"
+                                    name="birthDate"
+                                    autoComplete="yyyy-mm-dd"
                                     onChange={handleLnameChange}
                                 />
                             </Grid>
