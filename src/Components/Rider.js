@@ -39,13 +39,9 @@ export class Rider extends Component{
         if (this.state.isProcessingRide) {
             if (this.state.isStartLoc) {
                 this.setState({isProcessingRide: true, isStartLoc: false, preview: false, startLoc: area});
-                console.log("Start");
-                console.log(area);
             }
             else {  // End location
                 this.setState({isProcessingRide: false, endLoc: area, preview: true});
-                console.log("end");
-                console.log(area);
             }
         }
     }
@@ -55,7 +51,45 @@ export class Rider extends Component{
     }
 
     onBeginRide() {
-        this.setState({preview: false, rideRunning: true});
+        // Send my start and end locations with my profile (name, email, password)
+        // Receive dirver name and fare
+        const body = {
+            startLoc: this.state.startLoc,
+            endLoc: this.state.endLoc,
+            profile: this.props.riderProfile
+        };
+        const url = 'http://localhost:3000/ride';
+        fetch( url,
+        { method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+            })
+            .then((res)=> {
+                res.json()
+                    .then((resJson) => {
+                        this.setState({fare: resJson.fare});
+                    });
+                let end = false;
+                let counter = 0;
+                while(!end && counter < 20000000) {
+                    // Notif?
+                    const notifUrl = 'http://localhost:3000/rider/' + this.props.riderProfile.email;
+                    fetch( notifUrl, { method: 'GET',})
+                        .then((res) => {
+                            if(res.status === 200) {
+                                res.json()
+                                    .then((resJson) => {
+                                        this.setState({preview: false, rideRunning: true,
+                                            driverName: resJson.driverName});
+                                    });
+                            }
+                            end = true;
+                        });
+                    counter++;
+                }
+            });
     }
 
     onCancelRide() {
@@ -88,12 +122,11 @@ export class Rider extends Component{
             previewCard = <div className="row fixed-bottom mb-5" hidden={!this.state.preview}>
                 <div className="col-4"/>
                 <div className="col-4">
-                    <PreviewRide driverName={this.state.driverName}
+                    <PreviewRide
                                  startLoc={this.state.startLoc}
                                  endLoc={this.state.endLoc}
-                                 fare={this.state.fare}
                                  onPromoCodeChange={this.onPromoCodeEnter}
-                                 onBeginRideClick={this.onBeginRide}
+                                 onLookForDriverClick={this.onBeginRide}
                     />
                 </div>
                 <div className="col-4"/>
