@@ -48,7 +48,7 @@ export class Driver extends Component {
             driverEmail: this.props.profile.email,
             loc: this.state.startLoc
         };
-        while(!end && count<20000000) {
+        while(!end && count<20) {
             fetch( url,
                 { method: 'POST',
                     headers: {

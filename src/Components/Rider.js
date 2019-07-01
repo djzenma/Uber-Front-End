@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MapContainer from "./Map";
 import WelcomeCard from './WelcomeCard';
 import PreviewRide from './PreviewRide';
+import ProgressBar from './Progress';
 import {Button, Alert, Card} from 'react-bootstrap';
 
 export class Rider extends Component{
@@ -15,6 +16,7 @@ export class Rider extends Component{
         this.onBeginRide = this.onBeginRide.bind(this);
         this.onCancelRide = this.onCancelRide.bind(this);
         this.onDismissClick = this.onDismissClick.bind(this);
+        this.pollForDriver = this.pollForDriver.bind(this);
 
         this.state = {
             isProcessingRide: false,
@@ -25,8 +27,11 @@ export class Rider extends Component{
             promoCode: null,
             rideRunning: false,
             showReceipt: false,
+            searchingDriver: false,
             driverName: "Hamada Sheraton",
-            fare: 60
+            fare: 60,
+            pollCount: 0,
+            pollFun: null
         };
     }
 
@@ -54,8 +59,8 @@ export class Rider extends Component{
         // Send my start and end locations with my profile (name, email, password)
         // Receive dirver name and fare
         const body = {
-            startLoc: this.state.startLoc,
-            endLoc: this.state.endLoc,
+            startLoc: this.state.startLoc.name,
+            endLoc: this.state.endLoc.name,
             profile: this.props.riderProfile
         };
         const url = 'http://localhost:3000/ride';
@@ -71,25 +76,40 @@ export class Rider extends Component{
                     .then((resJson) => {
                         this.setState({fare: resJson.fare});
                     });
-                let end = false;
-                let counter = 0;
-                while(!end && counter < 20000000) {
-                    // Notif?
-                    const notifUrl = 'http://localhost:3000/rider/' + this.props.riderProfile.email;
-                    fetch( notifUrl, { method: 'GET',})
-                        .then((res) => {
-                            if(res.status === 200) {
-                                res.json()
-                                    .then((resJson) => {
-                                        this.setState({preview: false, rideRunning: true,
-                                            driverName: resJson.driverName});
-                                    });
-                            }
-                            end = true;
+                const pollFun = setInterval(this.pollForDriver, 1000);
+                this.setState({preview: false, searchingDriver: true, pollFun: pollFun});
+            });
+    }
+
+    pollForDriver() {
+        // Notif?
+        let count = this.state.pollCount;
+        const notifUrl = 'http://localhost:3000/rider/' + this.props.riderProfile.email;
+        fetch( notifUrl, { method: 'GET',})
+            .then((res) => {
+                if(res.status === 200) {
+                    res.json()
+                        .then((resJson) => {
+                            clearInterval(this.state.pollFun);
+                            this.setState({preview: false, rideRunning: true, searchingDriver: false,
+                                driverName: resJson.driverName});
+                            console.log("driver received");
+                            console.log(resJson);
                         });
-                    counter++;
                 }
             });
+        if(this.state.pollCount > 10) {
+            clearInterval(this.state.pollFun);
+            this.setState({
+                isProcessingRide: false,
+                isStartLoc: false,
+                preview: false,
+                rideRunning: false,
+                showReceipt: false,
+                searchingDriver: false
+            });
+        }
+        this.setState({pollCount: ++count});
     }
 
     onCancelRide() {
@@ -111,7 +131,9 @@ export class Rider extends Component{
 
 
     render() {
-        let targetLoc, previewCard = "", btnTxt = "Start a ride!", rideCard, receiptCard;
+        let targetLoc, previewCard = "", btnTxt = "Start a ride!", rideCard, receiptCard, searchingDriver= null;
+
+        console.log(this.state.searchingDriver);
         if(this.state.isProcessingRide && this.state.isStartLoc) {  // Choosing a starting location
             targetLoc = "Starting";
         }
@@ -154,6 +176,13 @@ export class Rider extends Component{
                     </Card>
                     <div className="col-4"/>
                 </div>;
+        }
+        else if(this.state.searchingDriver) {
+            searchingDriver = <div className="row fixed-bottom mb-5">
+                <div className="col-3"/>
+                <ProgressBar className="col-6"/>
+                <div className="col-3"/>
+            </div>;
         }
         else if(this.state.showReceipt) {
             receiptCard =
@@ -219,7 +248,7 @@ export class Rider extends Component{
                     </div>{/*row*/}
 
                     {/*Start ride Btn*/}
-                    <div className="row fixed-bottom mb-5" hidden={this.state.isProcessingRide || this.state.preview || this.state.rideRunning}>
+                    <div className="row fixed-bottom mb-5" hidden={this.state.isProcessingRide || this.state.preview || this.state.rideRunning || this.state.searchingDriver}>
                         <div className="col">
                             <Button variant="primary" onClick={this.onRideClick}>{btnTxt}</Button>
                         </div>
@@ -233,6 +262,9 @@ export class Rider extends Component{
 
                     {/*Receipt*/}
                     {receiptCard}
+
+                    {/* Searching For driver progress bar*/}
+                    {searchingDriver}
 
                 </div>{/*container*/}
 
