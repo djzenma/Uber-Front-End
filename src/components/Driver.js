@@ -9,7 +9,7 @@ import {AlertDismissible3} from './AlertDismissible3';
 import {Ride} from './Ride';
 import EndRide from './EndRide';
 import ArrivedRider from './ArrivedRider';
-
+import ProgressBar from './Progress';
 
 
 export class Driver extends Component {
@@ -17,63 +17,137 @@ export class Driver extends Component {
     constructor(props) {
         super(props);
         this.onMarkerClicked = this.onMarkerClicked.bind(this);
-        this.onRejectedRide = this.onRejectedRide.bind(this);
-        this.onAcceptedRide = this.onAcceptedRide.bind(this);
         this.onCancelledRide = this.onCancelledRide.bind(this);
         this.onEndedRide = this.onEndedRide.bind(this);
         this.onArrivedRider = this.onArrivedRider.bind(this);
-
+        this.pollForRide = this.pollForRide.bind(this);
+        this.onAcceptingRides = this.onAcceptingRides.bind(this);
 
         this.state =
             {
                 startLoc: null,
                 endLoc : null,
-                acceptedRide: false ,
-                rejectedRide : false ,
+                riderName: "",
                 acceptingRides:false,
                 arrivedRider : false ,
                 endedRide : false ,
                 cancelledRide:false ,
-                onRide:false,
+                foundRide: false,
+                pollCount: 0,
+                pollFun: null,
+                fare :null
             };
     }
 
 
-    onMarkerClicked(area) {
-        this.setState({arrivedRider : false ,rejectedRide : false , acceptedRide : false , acceptingRides: true , cancelledRide : false , endedRide :false ,onRide : false , startLoc: area});
-        console.log("Start");
-        console.log(area);
-
-    }
-    onRejectedRide()
+    onMarkerClicked(area)
     {
-        this.setState({arrivedRider : false ,rejectedRide : true , acceptedRide : false , acceptingRides: true , cancelledRide : false , endedRide :false ,onRide : false});
-        console.log("Rejecting Ride");
-        console.log(this.state.rejectedRide);
+        this.setState({
+            startLoc: area ,
+            endLoc : null,
+            pollCount: 0,
+            pollFun: null,
+            acceptingRides:true,
+            arrivedRider : false ,
+            endedRide : false ,
+            cancelledRide:false ,
+            foundRide: false});
+        this.onAcceptingRides();
+    }
+
+    onAcceptingRides(){
+            this.setState({pollCount: 0});
+            const poll = window.setInterval(this.pollForRide, 1000);
+            this.setState({pollFun: poll});
+    }
+
+
+
+    pollForRide() {
+        let count = this.state.pollCount;
+        let pollFun = this.state.pollFun;
+        console.log(pollFun);
+
+        const body = {
+            driverEmail: this.props.profile.email,
+            loc: this.state.startLoc.name
+        };
+        const url = 'http://localhost:3000/driver';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
+            .then((res)=> {
+                if(res.status === 200) {
+                    res.json()
+                        .then((resJson) => {
+                            this.setState({
+                                riderName: resJson.name,
+                                fare: resJson.fare,
+                                endLoc: resJson.endLoc,
+                                acceptingRides: false,
+                                arrivedRider: false,
+                                endedRide: false,
+                                cancelledRide: false,
+                                foundRide: true,
+                            });
+                            window.clearInterval(pollFun);
+                        });
+                }
+            });
+
+
+        this.setState({pollCount: ++count});
+        if(this.state.pollCount > 10) {
+            clearInterval(this.state.pollFun);
+            this.setState({
+                acceptingRides:true,
+                arrivedRider : false ,
+                endedRide : false ,
+                cancelledRide:false ,
+                foundRide : false ,
+            });
+        }
+
     }
 
     onEndedRide()
     {
-        this.setState({arrivedRider : false ,rejectedRide : false , acceptedRide : false , acceptingRides: true , cancelledRide : false , endedRide :true ,onRide : false , startLoc: this.props.rideLocation});
+        this.setState({
+            acceptingRides:true,
+            arrivedRider : false ,
+            endedRide : true ,
+            cancelledRide:false ,
+            foundRide: false});
+        if (this.state.endLoc != null)
+            this.setState ({ startLoc: this.state.endLoc});
+        this.onAcceptingRides();
         console.log("Ending Ride");
 
     }
     onCancelledRide()
     {
-        this.setState({arrivedRider : false ,rejectedRide : false , acceptedRide : false , acceptingRides: true , cancelledRide : true , endedRide :false, onRide : false});
+        this.setState({
+            acceptingRides:false,
+            arrivedRider : false ,
+            endedRide : false ,
+            cancelledRide:true ,
+            foundRide: false});
         console.log("Cancelling Ride");
     }
 
-    onAcceptedRide()
-    {
-        this.setState({arrivedRider : false ,rejectedRide : false , acceptedRide : true , acceptingRides: false , cancelledRide : false , endedRide :false, onRide : false});
-        console.log("Accepting Ride");
-        console.log(this.state.acceptedRide);
-    }
 
     onArrivedRider()
     {
-        this.setState({arrivedRider : true ,rejectedRide : false , acceptedRide : true , acceptingRides: false , cancelledRide : false , endedRide :false, onRide : true});
+        this.setState({
+            acceptingRides:false,
+            arrivedRider : true ,
+            endedRide : false ,
+            cancelledRide:false ,
+            foundRide: false});
         console.log("On Way to Rider");
     }
 
@@ -90,23 +164,43 @@ export class Driver extends Component {
                 </div>
                 <div className="col-4">
                     <AlertDismissible2 location = {this.state.startLoc}/>
-                    <AlertDismissible3 fare = {this.props.fare}/>
+                    <AlertDismissible3 fare = {this.state.fare}/>
+                    <ProgressBar/>
                 </div>
                 <div className="col-4"/>
             </div>
 
     }
-     else if (this.state.acceptingRides)
-        {
+     else
+      if (this.state.acceptingRides )
+     {
+         msg2=
+         <div className="row fixed-bottom mb-5" hidden={!this.state.acceptingRides}>
+             <div className="col-4">
+             </div>
+             <div className="col-4">
+                 <div className="row">
+                    <AlertDismissible location = {this.state.startLoc} />
+                 </div>
+                 <div className="row">
+                     <ProgressBar/>
+                 </div>
+             </div>
+             <div className="col-4"/>
+         </div>;
+
+     }
+     else if (this.state.foundRide)
+     {
             msg =
-                <div className="row fixed-bottom mb-5" hidden={!this.state.acceptingRides}>
+                <div className="row fixed-bottom mb-5" hidden={!this.state.foundRide}>
                     <div className="col-4">
                     </div>
                     <div className="col-4">
                         <AlertDismissible location = {this.state.startLoc} />
-                        <div  hidden = {this.state.rejectedRide || this.state.acceptedRide}>
-                            <Ride  rideLocation = {this.props.rideLocation} rider = {this.props.rider} fare ={this.props.fare}
-                                   onRejectedRide={this.onRejectedRide} onAcceptedRide={this.onAcceptedRide}/>
+                        <div  hidden = {this.state.arrivedRider  || this.state.cancelledRide}>
+                            <Ride  rideLocation = {this.state.endLoc} rider = {this.state.riderName} fare ={this.state.fare}
+                                   onCancelledRide={this.onCancelledRide} onArrivedRider={this.onArrivedRider}/>
                         </div>
                     </div>
                     <div className="col-4"/>
@@ -120,27 +214,13 @@ export class Driver extends Component {
                  <div className="col-4">
 
                      <div  hidden = {this.state.endedRide || this.state.cancelledRide}>
-                         <EndRide  rideLocation = {this.props.rideLocation} rider = {this.props.rider}
+                         <EndRide  rideLocation = {this.state.endLoc} rider = {this.state.riderName}
                                    onCancelledRide={this.onCancelledRide} onEndedRide={this.onEndedRide}/>
                      </div>
                      <div className="col-4"/>
                  </div>
              </div>;
      }
-        else if (this.state.acceptedRide)
-        {
-            msg2 =
-                <div className="row fixed-bottom mb-5" hidden={!this.state.acceptedRide}>
-                    <div className="col-4"/>
-                    <div className="col-4">
-                        <div  hidden = {this.state.arrivedRider  || this.state.cancelledRide}>
-                            <ArrivedRider rider = {this.props.rider}
-                                          onCancelledRide={this.onCancelledRide} onArrivedRider={this.onArrivedRider}/>
-                        </div>
-                        <div className="col-4"/>
-                    </div>
-                </div>;
-        }
 
 
         return (
@@ -171,7 +251,6 @@ export class Driver extends Component {
                     {msg}
 
                 </div>
-
                 {msg2}
                 {msg3}
                 {msg4}

@@ -15,8 +15,8 @@ class MapContainer extends Component{
             selectedPlace: {
                 name: 'hehe'
             },
-            areas: [{ lat: 30.029778, lng: 31.446361},
-                { lat: 30.030910, lng: 31.453245},]
+            areas: [{ lat: 30.029778, lng: 31.446361, name: 'NewCairo'},
+                { lat: 30.030910, lng: 31.453245, name: 'Zamalek'},]
         };
     }
 

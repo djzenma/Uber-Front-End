@@ -302,7 +302,7 @@ class App extends Component{
         else if(this.state.driver)
             page =
                 <div>
-                    <Driver rideLocation="Embaba" fare={30} rider="Lawa7ez" profile={this.state.profileInfo}/>
+                    <Driver  profile={this.state.profileInfo}/>
                     <div className="container-fluid fixed-top mt-3">
                         <div className="row">
                             <div className="col-1">

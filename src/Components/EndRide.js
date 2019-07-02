@@ -11,7 +11,8 @@ export default class EndRide extends Component {
                         <Card.Header>
                         </Card.Header>
                         <Card.Text>
-                            Please Select {this.props.rider}'s Ride State to {this.props.rideLocation}
+                            Rider Name: {this.props.rider} <br/>
+                            Destination: {this.props.rideLocation}
                         </Card.Text>
                         <Card.Footer>
                             <Button variant="success" onClick={this.props.onEndedRide}>End Ride</Button>
