@@ -17,8 +17,8 @@ export class Ride extends Component {
                         </Card.Text>
                         <Card.Footer>
 
-                            <Button variant="success" onClick={this.props.onAcceptedRide}>Accept Ride</Button>
-                            <Button variant="danger" onClick={this.props.onRejectedRide}>Reject Ride</Button>
+                            <Button variant="success" onClick={this.props.onArrivedRider}>Arrived Rider</Button>
+                            <Button variant="danger" onClick={this.props.onCancelledRide}>Cancelled Ride</Button>
 
                         </Card.Footer>
                     </Card.Body>

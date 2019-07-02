@@ -29,6 +29,7 @@ export class Driver extends Component {
                 endLoc : null,
                 riderName: "",
                 acceptingRides:false,
+                marker : false ,
                 arrivedRider : false ,
                 endedRide : false ,
                 cancelledRide:false ,
@@ -43,13 +44,14 @@ export class Driver extends Component {
     onMarkerClicked(area)
     {
         this.setState({
-            startLoc: area ,
+            startLoc: area.name ,
             endLoc : null,
             pollCount: 0,
             pollFun: null,
             acceptingRides:true,
             arrivedRider : false ,
             endedRide : false ,
+            marker : true ,
             cancelledRide:false ,
             foundRide: false});
         this.onAcceptingRides();
@@ -70,7 +72,7 @@ export class Driver extends Component {
 
         const body = {
             driverEmail: this.props.profile.email,
-            loc: this.state.startLoc.name
+            loc: this.state.startLoc
         };
         const url = 'http://localhost:3000/driver';
         fetch( url,
@@ -90,6 +92,7 @@ export class Driver extends Component {
                                 endLoc: resJson.endLoc,
                                 acceptingRides: false,
                                 arrivedRider: false,
+                                marker : false ,
                                 endedRide: false,
                                 cancelledRide: false,
                                 foundRide: true,
@@ -106,6 +109,7 @@ export class Driver extends Component {
             this.setState({
                 acceptingRides:true,
                 arrivedRider : false ,
+                marker : false ,
                 endedRide : false ,
                 cancelledRide:false ,
                 foundRide : false ,
@@ -116,16 +120,34 @@ export class Driver extends Component {
 
     onEndedRide()
     {
-        this.setState({
-            acceptingRides:true,
-            arrivedRider : false ,
-            endedRide : true ,
-            cancelledRide:false ,
-            foundRide: false});
-        if (this.state.endLoc != null)
-            this.setState ({ startLoc: this.state.endLoc});
-        this.onAcceptingRides();
-        console.log("Ending Ride");
+        const body = {
+            driverEmail: this.props.profile.email,
+        };
+        const url = 'http://localhost:3000/driver/ended';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
+            .then((res)=> {
+                if(res.status === 200) {
+                    this.setState({
+                                startLoc : this.state.endLoc ,
+                                acceptingRides: true,
+                                arrivedRider: false,
+                                marker : false ,
+                                endedRide: true,
+                                cancelledRide: false,
+                                foundRide: false,
+                            });
+
+                }
+                 this.onAcceptingRides();
+                console.log("Ending Ride");
+
+            });
 
     }
     onCancelledRide()
@@ -135,6 +157,7 @@ export class Driver extends Component {
             arrivedRider : false ,
             endedRide : false ,
             cancelledRide:true ,
+            marker : false ,
             foundRide: false});
         console.log("Cancelling Ride");
     }
@@ -146,6 +169,7 @@ export class Driver extends Component {
             acceptingRides:false,
             arrivedRider : true ,
             endedRide : false ,
+            marker : false ,
             cancelledRide:false ,
             foundRide: false});
         console.log("On Way to Rider");
@@ -156,6 +180,7 @@ export class Driver extends Component {
         let msg2 ;
         let msg3 ;
         let msg4 ;
+
      if (this.state.endedRide)
     {
         msg3 =
@@ -172,7 +197,7 @@ export class Driver extends Component {
 
     }
      else
-      if (this.state.acceptingRides )
+      if (this.state.acceptingRides && this.state.marker)
      {
          msg2=
          <div className="row fixed-bottom mb-5" hidden={!this.state.acceptingRides}>
@@ -180,7 +205,7 @@ export class Driver extends Component {
              </div>
              <div className="col-4">
                  <div className="row">
-                    <AlertDismissible location = {this.state.startLoc} />
+                     <AlertDismissible location = {this.state.startLoc} />
                  </div>
                  <div className="row">
                      <ProgressBar/>
@@ -197,7 +222,6 @@ export class Driver extends Component {
                     <div className="col-4">
                     </div>
                     <div className="col-4">
-                        <AlertDismissible location = {this.state.startLoc} />
                         <div  hidden = {this.state.arrivedRider  || this.state.cancelledRide}>
                             <Ride  rideLocation = {this.state.endLoc} rider = {this.state.riderName} fare ={this.state.fare}
                                    onCancelledRide={this.onCancelledRide} onArrivedRider={this.onArrivedRider}/>
@@ -215,7 +239,7 @@ export class Driver extends Component {
 
                      <div  hidden = {this.state.endedRide || this.state.cancelledRide}>
                          <EndRide  rideLocation = {this.state.endLoc} rider = {this.state.riderName}
-                                   onCancelledRide={this.onCancelledRide} onEndedRide={this.onEndedRide}/>
+                                    onEndedRide={this.onEndedRide}/>
                      </div>
                      <div className="col-4"/>
                  </div>

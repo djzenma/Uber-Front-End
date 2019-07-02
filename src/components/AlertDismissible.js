@@ -17,7 +17,7 @@ export class AlertDismissible extends React.Component {
         if (this.state.show) {
             return (
                 <Alert variant="success" onClose={handleDismiss} dismissible>
-                    You Can Now Accept Rides from {this.props.location.lat} lat , {this.props.location.lng} lng !
+                    You Can Now Accept Rides from {this.props.location} !
                 </Alert>
             );
         }

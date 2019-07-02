@@ -92,13 +92,13 @@ export class Rider extends Component{
                         .then((resJson) => {
                             clearInterval(this.state.pollFun);
                             this.setState({preview: false, rideRunning: true, searchingDriver: false,
-                                driverName: resJson.driverName});
+                                driverName: resJson});
                             console.log("driver received");
                             console.log(resJson);
                         });
                 }
             });
-        if(this.state.pollCount > 10) {
+        if(this.state.pollCount > 30) {
             clearInterval(this.state.pollFun);
             this.setState({
                 isProcessingRide: false,
@@ -169,9 +169,7 @@ export class Rider extends Component{
                             <Card.Text>
                                 Expected Fare: {this.state.fare}EGP
                             </Card.Text>
-                            <Card.Footer>
-                                <Button variant="primary" onClick={this.onCancelRide}>Cancel the Ride</Button>
-                            </Card.Footer>
+
                         </Card.Body>
                     </Card>
                     <div className="col-4"/>

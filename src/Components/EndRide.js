@@ -16,8 +16,6 @@ export default class EndRide extends Component {
                         </Card.Text>
                         <Card.Footer>
                             <Button variant="success" onClick={this.props.onEndedRide}>End Ride</Button>
-                            <Button variant="danger" onClick={this.props.onCancelledRide}>Cancel Ride</Button>
-
                         </Card.Footer>
                     </Card.Body>
                 </Card>
