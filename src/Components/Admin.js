@@ -8,9 +8,20 @@ export  default class Admin extends Component {
 
     constructor(props) {
         super(props);
+        this.onAddadmin = this.onAddadmin.bind(this);
+
 
     }
+    onAddadmin (inputs)
+    {
+        console.log("Adding Admin");
+        console.log(inputs);
+        inputs.forEach((item, index) => {
+            console.log (item.id + ': ' + item.input) ;
+        });
 
+
+    }
     render() {
         return (
             <div className="w-100 container-fluid">
@@ -29,7 +40,7 @@ export  default class Admin extends Component {
                         <MyForm heading="Add Admin" formGroups={[
                             {id:"formBasicEmail", label: "Email address", type: "email", placeHolder: "Enter email"},
                             {id:"formBasicPassword", label: "Password", type: "password", placeHolder: "Password"}]}
-                                btnColor="primary" btnTxt="Add"/>
+                                btnColor="primary"  btnTxt="Add"  onClickingbutton = {this.onAddadmin}/>
 
 
                         {/* Delete Admin*/}

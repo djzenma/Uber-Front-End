@@ -16,9 +16,7 @@ export class Ride extends Component {
                             Expected Fare: {this.props.fare} EGP
                         </Card.Text>
                         <Card.Footer>
-
                             <Button variant="success" onClick={this.props.onArrivedRider}>Arrived Rider</Button>
-                            <Button variant="danger" onClick={this.props.onCancelledRide}>Cancelled Ride</Button>
 
                         </Card.Footer>
                     </Card.Body>

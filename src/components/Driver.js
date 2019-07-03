@@ -8,7 +8,6 @@ import {AlertDismissible2} from './AlertDismissible2';
 import {AlertDismissible3} from './AlertDismissible3';
 import {Ride} from './Ride';
 import EndRide from './EndRide';
-import ArrivedRider from './ArrivedRider';
 import ProgressBar from './Progress';
 
 
@@ -17,7 +16,6 @@ export class Driver extends Component {
     constructor(props) {
         super(props);
         this.onMarkerClicked = this.onMarkerClicked.bind(this);
-        this.onCancelledRide = this.onCancelledRide.bind(this);
         this.onEndedRide = this.onEndedRide.bind(this);
         this.onArrivedRider = this.onArrivedRider.bind(this);
         this.pollForRide = this.pollForRide.bind(this);
@@ -150,17 +148,6 @@ export class Driver extends Component {
             });
 
     }
-    onCancelledRide()
-    {
-        this.setState({
-            acceptingRides:false,
-            arrivedRider : false ,
-            endedRide : false ,
-            cancelledRide:true ,
-            marker : false ,
-            foundRide: false});
-        console.log("Cancelling Ride");
-    }
 
 
     onArrivedRider()
@@ -224,7 +211,7 @@ export class Driver extends Component {
                     <div className="col-4">
                         <div  hidden = {this.state.arrivedRider  || this.state.cancelledRide}>
                             <Ride  rideLocation = {this.state.endLoc} rider = {this.state.riderName} fare ={this.state.fare}
-                                   onCancelledRide={this.onCancelledRide} onArrivedRider={this.onArrivedRider}/>
+                                    onArrivedRider={this.onArrivedRider}/>
                         </div>
                     </div>
                     <div className="col-4"/>

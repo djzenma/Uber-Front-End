@@ -84,37 +84,80 @@ export class Rider extends Component{
     pollForDriver() {
         // Notif?
         let count = this.state.pollCount;
-        const notifUrl = 'http://localhost:3000/rider/' + this.props.riderProfile.email;
-        fetch( notifUrl, { method: 'GET',})
-            .then((res) => {
-                if(res.status === 200) {
-                    res.json()
-                        .then((resJson) => {
-                            clearInterval(this.state.pollFun);
-                            this.setState({preview: false, rideRunning: true, searchingDriver: false,
-                                driverName: resJson});
-                            console.log("driver received");
-                            console.log(resJson);
-                        });
-                }
-            });
-        if(this.state.pollCount > 30) {
+        if(this.state.showReceipt) {    //  Ride ended
             clearInterval(this.state.pollFun);
-            this.setState({
-                isProcessingRide: false,
-                isStartLoc: false,
-                preview: false,
-                rideRunning: false,
-                showReceipt: false,
-                searchingDriver: false
-            });
         }
-        this.setState({pollCount: ++count});
+        else {  // Ride either requested or still running
+            const notifUrl = 'http://localhost:3000/rider/' + this.props.riderProfile.email;
+            fetch(notifUrl, {method: 'GET',})
+                .then((res) => {
+                    if (res.status === 200) {   // Ride being requested and received successfully
+                        res.json()
+                            .then((resJson) => {
+                                // Driver received
+                                clearInterval(this.state.pollFun);
+                                this.setState({
+                                    preview: false, rideRunning: true, searchingDriver: false,
+                                    driverName: resJson
+                                });
+                                console.log("driver received");
+
+                                // poll to ask if the ride ended
+                                const ridePoll = setInterval(this.pollForDriver, 1000);
+                                this.setState({pollFun: ridePoll});
+                            });
+                    } else if (res.status === 404) {    // Ride running and waiting for end
+                        res.json().then((json) => {
+                                if (json.noRide !== undefined) {
+                                    if (json.noRide) {
+                                        clearInterval(this.state.pollFun);
+                                        this.setState({
+                                            isProcessingRide: false,
+                                            isStartLoc: false,
+                                            preview: false,
+                                            startLoc: null,
+                                            endLoc: null,
+                                            promoCode: null,
+                                            rideRunning: false,
+                                            showReceipt: true,
+                                            searchingDriver: false,
+                                            pollCount: 0,
+                                            pollFun: null
+                                        });
+                                    }
+                                }
+                            }
+                        );
+                    }
+                });
+            if (this.state.pollCount > 30) {
+                clearInterval(this.state.pollFun);
+                this.setState({
+                    isProcessingRide: false,
+                    isStartLoc: false,
+                    preview: false,
+                    rideRunning: false,
+                    showReceipt: false,
+                    searchingDriver: false
+                });
+            }
+            this.setState({pollCount: ++count});
+        }
     }
 
     onCancelRide() {
-        // TODO:: Get cancelation fee from BE via App.js
-        this.setState({rideRunning: false, showReceipt: true, cancelFee: this.props.cancelFee});
+        console.log('cancel');
+        const url = `http://localhost:3000/rider/cancel/plz?email=${this.props.riderProfile.email}&sLoc=${this.state.startLoc.name}&eLoc=${this.state.endLoc.name}`;
+        fetch( url, { method: 'GET'})
+            .then((res) => {
+                if(res.status === 200) {
+                    console.log('cancel requested');
+                    res.json().then((json)=> {
+                        this.setState({rideRunning: false, showReceipt: true, cancelFee: json.cancelFee });
+                    });
+                }
+            });
+
     }
 
     onDismissClick() {
@@ -169,7 +212,9 @@ export class Rider extends Component{
                             <Card.Text>
                                 Expected Fare: {this.state.fare}EGP
                             </Card.Text>
-
+                            <Card.Footer>
+                                <Button variant="danger" onClick={this.onCancelRide}>Cancelled Ride</Button>
+                            </Card.Footer>
                         </Card.Body>
                     </Card>
                     <div className="col-4"/>
@@ -183,6 +228,7 @@ export class Rider extends Component{
             </div>;
         }
         else if(this.state.showReceipt) {
+
             receiptCard =
                 <div className="row fixed-bottom mb-5">
                     <div className="col-4"/>
