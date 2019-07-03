@@ -28,6 +28,7 @@ export class Driver extends Component {
                 riderName: "",
                 acceptingRides:false,
                 marker : false ,
+                rideid : "",
                 arrivedRider : false ,
                 endedRide : false ,
                 cancelledRide:false ,
@@ -88,6 +89,7 @@ export class Driver extends Component {
                                 riderName: resJson.name,
                                 fare: resJson.fare,
                                 endLoc: resJson.endLoc,
+                                rideid : resJson.rideid ,
                                 acceptingRides: false,
                                 arrivedRider: false,
                                 marker : false ,
@@ -152,14 +154,44 @@ export class Driver extends Component {
 
     onArrivedRider()
     {
-        this.setState({
-            acceptingRides:false,
-            arrivedRider : true ,
-            endedRide : false ,
-            marker : false ,
-            cancelledRide:false ,
-            foundRide: false});
-        console.log("On Way to Rider");
+        const url = 'http://localhost:3000/driver/arrived/plz?driveremail=' + this.props.profile.email + '&rideid='+ this.state.rideid;
+        fetch( url,
+            { method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((res)=> {
+                if(res.status === 200) {
+                    this.setState({
+                        acceptingRides:false,
+                        arrivedRider : true ,
+                        endedRide : false ,
+                        marker : false ,
+                        cancelledRide:false ,
+                        foundRide: false
+                    });
+                    console.log("On Way to Rider");
+
+                }
+                else
+                {
+
+                        this.setState({
+                            acceptingRides:true,
+                            arrivedRider : false ,
+                            endedRide : false ,
+                            marker : true ,
+                            cancelledRide:false ,
+                            foundRide: false
+                        });
+                        console.log("Rider Cancelled Ride");
+
+                }
+
+            });
+
+
     }
 
     render(){
@@ -192,7 +224,11 @@ export class Driver extends Component {
              </div>
              <div className="col-4">
                  <div className="row">
-                     <AlertDismissible location = {this.state.startLoc} />
+                     <div className="col-2"/>
+                     <div className="col-8">
+                        <AlertDismissible location = {this.state.startLoc} />
+                     </div>
+                     <div className="col-2"/>
                  </div>
                  <div className="row">
                      <ProgressBar/>
