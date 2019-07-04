@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="00452d50-e08f-4b45-b43f-2a888b38b9f0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/ArrivedRider.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Driver.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Driver.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Rider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Rider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Ride.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Ride.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Driver.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Driver.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,35 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="857">
-              <caret line="164" column="24" selection-start-line="164" selection-start-column="13" selection-end-line="164" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/MyForm.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="65" column="77" selection-start-line="65" selection-start-column="74" selection-end-line="65" selection-end-column="77" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/Driver.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="814">
-              <caret line="153" column="5" lean-forward="true" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
+            <state relative-caret-position="298">
+              <caret line="162" column="27" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -60,20 +31,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Rider.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-885">
-              <caret line="191" column="38" selection-start-line="191" selection-start-column="38" selection-end-line="191" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Admin.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+            <state relative-caret-position="182">
+              <caret line="149" column="98" selection-start-line="149" selection-end-line="150" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -92,9 +51,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onLogin</find>
-      <find>searchingDriver</find>
-      <find>rejected</find>
       <find>accepted</find>
       <find>on wa</find>
       <find>onRide</find>
@@ -121,7 +77,10 @@
       <find>type</find>
       <find>profileInfo</find>
       <find>log</find>
+      <find>arrivedRider</find>
       <find>showReceipt</find>
+      <find>alert</find>
+      <find>plz</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -159,9 +118,8 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="50" />
-    <option name="y" value="49" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="725" />
   </component>
@@ -295,6 +253,7 @@
       <workItem from="1562000415494" duration="905000" />
       <workItem from="1562001615821" duration="4022000" />
       <workItem from="1562007494246" duration="1609000" />
+      <workItem from="1562248703173" duration="3139000" />
     </task>
     <task id="LOCAL-00001" summary="Added google maps">
       <created>1560976172311</created>
@@ -436,11 +395,25 @@
       <option name="project" value="LOCAL" />
       <updated>1562101639897</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Finished Drive/ Rider ride notifications">
+      <created>1562160209057</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1562160209057</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Finished Drive/ Rider ride notifications">
+      <created>1562162386066</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1562162386066</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111983000" />
+    <option name="totallyTimeSpent" value="117799000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -459,9 +432,10 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="npm" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.07862408" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.35872236" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -709,24 +683,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/ArrivedRider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/AlertDismissible2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/ArrivedRider.js" />
     <entry file="file://$PROJECT_DIR$/src/App.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
@@ -753,18 +710,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="857">
-          <caret line="164" column="24" selection-start-line="164" selection-start-column="13" selection-end-line="164" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        <state relative-caret-position="610">
+          <caret line="321" column="21" selection-start-line="321" selection-start-column="17" selection-end-line="321" selection-end-column="21" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -773,7 +720,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/MyForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
+        <state relative-caret-position="1302">
           <caret line="65" column="77" selection-start-line="65" selection-start-column="74" selection-end-line="65" selection-end-column="77" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
@@ -781,10 +728,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/AlertDismissible3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/AlertDismissible2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Rider.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-885">
-          <caret line="191" column="38" selection-start-line="191" selection-start-column="38" selection-end-line="191" selection-end-column="38" />
+        <state relative-caret-position="182">
+          <caret line="149" column="98" selection-start-line="149" selection-end-line="150" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -793,8 +768,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Driver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="814">
-          <caret line="153" column="5" lean-forward="true" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
+        <state relative-caret-position="298">
+          <caret line="162" column="27" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

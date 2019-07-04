@@ -57,9 +57,9 @@ export class Driver extends Component {
     }
 
     onAcceptingRides(){
-            this.setState({pollCount: 0});
-            const poll = window.setInterval(this.pollForRide, 1000);
-            this.setState({pollFun: poll});
+        this.setState({pollCount: 0});
+        const poll = window.setInterval(this.pollForRide, 1000);
+        this.setState({pollFun: poll});
     }
 
 
@@ -134,17 +134,17 @@ export class Driver extends Component {
             .then((res)=> {
                 if(res.status === 200) {
                     this.setState({
-                                startLoc : this.state.endLoc ,
-                                acceptingRides: true,
-                                arrivedRider: false,
-                                marker : false ,
-                                endedRide: true,
-                                cancelledRide: false,
-                                foundRide: false,
-                            });
+                        startLoc : this.state.endLoc ,
+                        acceptingRides: true,
+                        arrivedRider: false,
+                        marker : false ,
+                        endedRide: true,
+                        cancelledRide: false,
+                        foundRide: false,
+                    });
 
                 }
-                 this.onAcceptingRides();
+                this.onAcceptingRides();
                 console.log("Ending Ride");
 
             });
@@ -154,12 +154,17 @@ export class Driver extends Component {
 
     onArrivedRider()
     {
-        const url = 'http://localhost:3000/driver/arrived/plz?driveremail=' + this.props.profile.email + '&rideid='+ this.state.rideid;
+        const body = {
+            driveremail: this.props.profile.email ,
+            rideid :this.state.rideid
+        };
+        const url = 'http://localhost:3000/driver/arrived';
         fetch( url,
-            { method: 'GET',
+            { method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body: JSON.stringify(body)
             })
             .then((res)=> {
                 if(res.status === 200) {
@@ -177,15 +182,15 @@ export class Driver extends Component {
                 else
                 {
 
-                        this.setState({
-                            acceptingRides:true,
-                            arrivedRider : false ,
-                            endedRide : false ,
-                            marker : true ,
-                            cancelledRide:false ,
-                            foundRide: false
-                        });
-                        console.log("Rider Cancelled Ride");
+                    this.setState({
+                        acceptingRides:true,
+                        arrivedRider : false ,
+                        endedRide : false ,
+                        marker : true ,
+                        cancelledRide:false ,
+                        foundRide: false
+                    });
+                    console.log("Rider Cancelled Ride");
 
                 }
 
@@ -200,46 +205,46 @@ export class Driver extends Component {
         let msg3 ;
         let msg4 ;
 
-     if (this.state.endedRide)
-    {
-        msg3 =
-            <div className="row fixed-bottom mb-5" hidden={!this.state.endedRide}>
-                <div className="col-4">
+        if (this.state.endedRide)
+        {
+            msg3 =
+                <div className="row fixed-bottom mb-5" hidden={!this.state.endedRide}>
+                    <div className="col-4">
+                    </div>
+                    <div className="col-4">
+                        <AlertDismissible2 location = {this.state.startLoc}/>
+                        <AlertDismissible3 fare = {this.state.fare}/>
+                        <ProgressBar/>
+                    </div>
+                    <div className="col-4"/>
                 </div>
-                <div className="col-4">
-                    <AlertDismissible2 location = {this.state.startLoc}/>
-                    <AlertDismissible3 fare = {this.state.fare}/>
-                    <ProgressBar/>
-                </div>
-                <div className="col-4"/>
-            </div>
 
-    }
-     else
-      if (this.state.acceptingRides && this.state.marker)
-     {
-         msg2=
-         <div className="row fixed-bottom mb-5" hidden={!this.state.acceptingRides}>
-             <div className="col-4">
-             </div>
-             <div className="col-4">
-                 <div className="row">
-                     <div className="col-2"/>
-                     <div className="col-8">
-                        <AlertDismissible location = {this.state.startLoc} />
-                     </div>
-                     <div className="col-2"/>
-                 </div>
-                 <div className="row">
-                     <ProgressBar/>
-                 </div>
-             </div>
-             <div className="col-4"/>
-         </div>;
+        }
+        else
+        if (this.state.acceptingRides && this.state.marker)
+        {
+            msg2=
+                <div className="row fixed-bottom mb-5" hidden={!this.state.acceptingRides}>
+                    <div className="col-4">
+                    </div>
+                    <div className="col-4">
+                        <div className="row">
+                            <div className="col-2"/>
+                            <div className="col-8">
+                                <AlertDismissible location = {this.state.startLoc} />
+                            </div>
+                            <div className="col-2"/>
+                        </div>
+                        <div className="row">
+                            <ProgressBar/>
+                        </div>
+                    </div>
+                    <div className="col-4"/>
+                </div>;
 
-     }
-     else if (this.state.foundRide)
-     {
+        }
+        else if (this.state.foundRide)
+        {
             msg =
                 <div className="row fixed-bottom mb-5" hidden={!this.state.foundRide}>
                     <div className="col-4">
@@ -247,27 +252,27 @@ export class Driver extends Component {
                     <div className="col-4">
                         <div  hidden = {this.state.arrivedRider  || this.state.cancelledRide}>
                             <Ride  rideLocation = {this.state.endLoc} rider = {this.state.riderName} fare ={this.state.fare}
-                                    onArrivedRider={this.onArrivedRider}/>
+                                   onArrivedRider={this.onArrivedRider}/>
                         </div>
                     </div>
                     <div className="col-4"/>
                 </div>;
         }
-     else if (this.state.arrivedRider)
-     {
-         msg4 =
-             <div className="row fixed-bottom mb-5" hidden={!this.state.arrivedRider}>
-                 <div className="col-4"/>
-                 <div className="col-4">
+        else if (this.state.arrivedRider)
+        {
+            msg4 =
+                <div className="row fixed-bottom mb-5" hidden={!this.state.arrivedRider}>
+                    <div className="col-4"/>
+                    <div className="col-4">
 
-                     <div  hidden = {this.state.endedRide || this.state.cancelledRide}>
-                         <EndRide  rideLocation = {this.state.endLoc} rider = {this.state.riderName}
-                                    onEndedRide={this.onEndedRide}/>
-                     </div>
-                     <div className="col-4"/>
-                 </div>
-             </div>;
-     }
+                        <div  hidden = {this.state.endedRide || this.state.cancelledRide}>
+                            <EndRide  rideLocation = {this.state.endLoc} rider = {this.state.riderName}
+                                      onEndedRide={this.onEndedRide}/>
+                        </div>
+                        <div className="col-4"/>
+                    </div>
+                </div>;
+        }
 
 
         return (
