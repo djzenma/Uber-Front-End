@@ -4,12 +4,8 @@
     <list default="true" id="00452d50-e08f-4b45-b43f-2a888b38b9f0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Driver.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Driver.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/LeftDrawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/LeftDrawer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Rider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Rider.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,44 +18,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="268" column="32" selection-start-line="268" selection-start-column="32" selection-end-line="268" selection-end-column="32" />
+            <state relative-caret-position="-4472">
+              <caret line="128" column="35" selection-start-line="128" selection-start-column="35" selection-end-line="128" selection-end-column="35" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Components/LeftDrawer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="41" column="53" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Rider.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="82" column="50" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Ride.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="18" column="102" selection-start-line="18" selection-start-column="98" selection-end-line="18" selection-end-column="102" />
             </state>
           </provider>
         </entry>
@@ -75,16 +41,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>endLOc</find>
-      <find>endLoc</find>
-      <find>30</find>
-      <find>nice</find>
-      <find>onCancelRide</find>
-      <find>onSignUP</find>
-      <find>button</find>
-      <find>butt</find>
-      <find>&lt;Ride</find>
-      <find>ride</find>
       <find>target</find>
       <find>credentials</find>
       <find>type</find>
@@ -95,16 +51,26 @@
       <find>onPromoCodeEnter</find>
       <find>cancel</find>
       <find>rideRunning</find>
-      <find>showReceipt</find>
       <find>onBeginRide</find>
       <find>setState</find>
       <find>startLoc</find>
       <find>login</find>
       <find>this.props.profile.credit</find>
-      <find>profile</find>
       <find>riderProfile</find>
-      <find>profileInfo</find>
       <find>console.log</find>
+      <find>onFavplacesClicked</find>
+      <find>onRiderRidesHistoryClick</find>
+      <find>ridesHistory</find>
+      <find>onMyRidesHistoryClick</find>
+      <find>favPlaces</find>
+      <find>date</find>
+      <find>rece</find>
+      <find>receiptCard</find>
+      <find>cancelFee</find>
+      <find>showReceipt</find>
+      <find>credit</find>
+      <find>profile</find>
+      <find>profileInfo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -120,10 +86,8 @@
         <option value="$PROJECT_DIR$/src/components/LeftDrawer.js" />
         <option value="$PROJECT_DIR$/src/components/Rider.js" />
         <option value="$PROJECT_DIR$/src/components/ProfilePage.js" />
-        <option value="$PROJECT_DIR$/src/Components/RidesHistory.js" />
         <option value="$PROJECT_DIR$/src/Components/SignInPage.js" />
         <option value="$PROJECT_DIR$/src/Components/Form.js" />
-        <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/Components/PreviewRide.js" />
         <option value="$PROJECT_DIR$/src/Components/Map.js" />
         <option value="$PROJECT_DIR$/src/Components/Progress.js" />
@@ -131,21 +95,23 @@
         <option value="$PROJECT_DIR$/src/Components/AlertDismissible.js" />
         <option value="$PROJECT_DIR$/src/Components/SignUpPage.js" />
         <option value="$PROJECT_DIR$/src/Components/Ride.js" />
-        <option value="$PROJECT_DIR$/src/Components/Driver.js" />
         <option value="$PROJECT_DIR$/src/Components/WelcomeCard.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/Components/MyForm.js" />
-        <option value="$PROJECT_DIR$/src/Components/Profile.js" />
         <option value="$PROJECT_DIR$/src/Components/Admin.js" />
-        <option value="$PROJECT_DIR$/src/Components/Rider.js" />
+        <option value="$PROJECT_DIR$/src/Components/Driver.js" />
         <option value="$PROJECT_DIR$/src/Components/LeftDrawer.js" />
+        <option value="$PROJECT_DIR$/src/index.css" />
+        <option value="$PROJECT_DIR$/src/Components/RidesHistory.js" />
+        <option value="$PROJECT_DIR$/src/Components/Rider.js" />
+        <option value="$PROJECT_DIR$/src/Components/Profile.js" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/App.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="725" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -277,7 +243,7 @@
       <workItem from="1562000415494" duration="905000" />
       <workItem from="1562001615821" duration="4022000" />
       <workItem from="1562007494246" duration="1609000" />
-      <workItem from="1562248703173" duration="16523000" />
+      <workItem from="1562248703173" duration="29316000" />
     </task>
     <task id="LOCAL-00001" summary="Added google maps">
       <created>1560976172311</created>
@@ -461,11 +427,25 @@
       <option name="project" value="LOCAL" />
       <updated>1562340945522</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Now the ride is deleted when the rider doesn't find a driver">
+      <created>1562345486823</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1562345486823</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Ana 5alast Ya Mazen">
+      <created>1562365655364</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1562365655364</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131183000" />
+    <option name="totallyTimeSpent" value="143976000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -487,7 +467,7 @@
       <window_info anchor="bottom" id="Messages" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.24815725" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.16953316" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -509,7 +489,7 @@
       <window_info anchor="bottom" id="Messages" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.07248157" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.16953316" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -578,7 +558,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added google maps" />
     <MESSAGE value="New google maps Component" />
     <MESSAGE value="Added Hello card, Choosing Location and Preview Card" />
     <MESSAGE value="Added Ride Card" />
@@ -603,7 +582,8 @@
     <MESSAGE value="Finished Drive/ Rider ride notifications" />
     <MESSAGE value="Finished Drive Rider" />
     <MESSAGE value="Now the ride is deleted when the rider doesn't find a driver" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now the ride is deleted when the rider doesn't find a driver" />
+    <MESSAGE value="Ana 5alast Ya Mazen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ana 5alast Ya Mazen" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/node_modules/react-google-maps/types/index.d.ts">
@@ -637,13 +617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/ProfilePage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -712,13 +685,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/ArrivedRider.js" />
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="85" column="1" selection-start-line="85" selection-start-column="1" selection-end-line="85" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/SignUpPage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
@@ -764,16 +730,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Driver.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="167" column="31" selection-start-line="167" selection-start-column="20" selection-end-line="167" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/WelcomeCard.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -784,27 +740,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Profile.js">
+    <entry file="file://$PROJECT_DIR$/src/Components/Driver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2713">
-          <caret line="154" selection-start-line="154" selection-end-line="154" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/MyForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1607">
-          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        <state relative-caret-position="211">
+          <caret line="74" column="42" lean-forward="true" selection-start-line="74" selection-start-column="42" selection-end-line="74" selection-end-column="42" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Admin.js">
+    <entry file="file://$PROJECT_DIR$/src/index.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="709">
-          <caret line="188" selection-start-line="188" selection-end-line="188" />
+        <state relative-caret-position="294">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/LeftDrawer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="33" column="63" lean-forward="true" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/MyForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -813,42 +779,66 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/RidesHistory.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="19" />
+        <state relative-caret-position="315">
+          <caret line="19" column="110" selection-start-line="19" selection-start-column="110" selection-end-line="19" selection-end-column="110" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Ride.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="18" column="102" selection-start-line="18" selection-start-column="98" selection-end-line="18" selection-end-column="102" />
+        <state relative-caret-position="320">
+          <caret line="18" column="101" selection-start-line="18" selection-start-column="100" selection-end-line="18" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/ProfilePage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="123" column="26" lean-forward="true" selection-start-line="123" selection-start-column="26" selection-end-line="123" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Rider.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="82" column="50" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
+        <state relative-caret-position="194">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="83" column="24" lean-forward="true" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="268" column="32" selection-start-line="268" selection-start-column="32" selection-end-line="268" selection-end-column="32" />
+        <state relative-caret-position="-4472">
+          <caret line="128" column="35" selection-start-line="128" selection-start-column="35" selection-end-line="128" selection-end-column="35" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/LeftDrawer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="41" column="53" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
         </state>
       </provider>
     </entry>

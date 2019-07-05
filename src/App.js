@@ -126,6 +126,7 @@ class App extends Component{
                 driver: false,
                 admin: false,
                 profile: false,
+                favPlaces : false ,
                 ridesHistory: false
             });
         else if(this.state.role === 'driver')
@@ -136,6 +137,7 @@ class App extends Component{
                 driver: true,
                 admin: false,
                 profile: false,
+                favPlaces : false ,
                 ridesHistory: false
             });
         else
@@ -146,6 +148,7 @@ class App extends Component{
                 driver: false,
                 admin: true,
                 profile: false,
+                favPlaces : false ,
                 ridesHistory: false
             });
     }
@@ -174,6 +177,7 @@ class App extends Component{
             driver: false,
             admin: false,
             profile: true,
+            favPlaces : false ,
             ridesHistory: false
         });
     }
@@ -186,6 +190,7 @@ class App extends Component{
             driver: false,
             admin: false,
             profile: false,
+            favPlaces : false ,
             ridesHistory: true
         });
     }
@@ -222,6 +227,7 @@ class App extends Component{
                             admin: false,
                             profile: false,
                             ridesHistory: false,
+                            favPlaces : false ,
                             role: role
                         });
                     else if (role === 'driver')
@@ -233,6 +239,7 @@ class App extends Component{
                             admin: false,
                             profile: false,
                             ridesHistory: false,
+                            favPlaces : false ,
                             role: role
                         });
                     else
@@ -244,6 +251,7 @@ class App extends Component{
                             admin: true,
                             profile: false,
                             ridesHistory: false,
+                            favPlaces : false ,
                             role: role
                         });
                 }
@@ -276,6 +284,7 @@ class App extends Component{
                             profile: false,
                             ridesHistory: false,
                             role: role,
+                            favPlaces : false ,
                             profileInfo: credentials
                         });
                     else if(role === 'driver')
@@ -288,6 +297,7 @@ class App extends Component{
                             profile: false,
                             ridesHistory: false,
                             role: role,
+                            favPlaces : false ,
                             profileInfo: credentials
                         });
                     else
@@ -300,6 +310,7 @@ class App extends Component{
                             profile: false,
                             ridesHistory: false,
                             role: role,
+                            favPlaces : false ,
                             profileInfo: credentials
                         });
                 }
@@ -314,6 +325,7 @@ class App extends Component{
             driver: false,
             admin: false,
             profile: false,
+            favPlaces : false ,
             ridesHistory: false
         });
     }
@@ -326,7 +338,8 @@ class App extends Component{
             driver: false,
             admin: false,
             profile: false,
-            ridesHistory: false
+            ridesHistory: false,
+            favPlaces : false
         });
     }
 

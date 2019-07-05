@@ -56,7 +56,7 @@ export default class Profile extends Component{
 
     render() {
         let nameField = <Form.Control plaintext readOnly defaultValue={this.props.profile.name}/>;
-        let birthdateField = <Form.Control plaintext readOnly defaultValue={this.props.profile.birthDate}/>;
+        let birthdateField = <Form.Control plaintext readOnly defaultValue={this.props.profile.birthDate.substr(0,10)}/>;
         let emailField = <Form.Control plaintext readOnly defaultValue={this.props.profile.email}/>;
         let passField = <Button className="bg-transparent mt-3" style={{"color": "blue"}}
                                 onClick={() => this.onProfileChange('password')}>Change my password</Button>;
