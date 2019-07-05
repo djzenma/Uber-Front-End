@@ -28,6 +28,7 @@ export class Rider extends Component{
             rideRunning: false,
             showReceipt: false,
             searchingDriver: false,
+            endPoll: false,
             driverName: "Hamada Sheraton",
             fare: 60,
             pollCount: 0,
@@ -37,22 +38,22 @@ export class Rider extends Component{
 
     onRideClick() {
         if(!this.state.isProcessingRide)    // Clicked Start ride
-            this.setState({isProcessingRide: true, isStartLoc: true, preview: false});
+            this.setState({isProcessingRide: true,showReceipt: false, isStartLoc: true, endPoll: false, preview: false, pollCount: 0});
     };
 
     onMarkerClicked(area) {
         if (this.state.isProcessingRide) {
             if (this.state.isStartLoc) {
-                this.setState({isProcessingRide: true, isStartLoc: false, preview: false, startLoc: area});
+                this.setState({isProcessingRide: true,showReceipt: false, isStartLoc: false, preview: false, endPoll: false, startLoc: area});
             }
             else {  // End location
-                this.setState({isProcessingRide: false, endLoc: area, preview: true});
+                this.setState({isProcessingRide: false,showReceipt: false, endLoc: area, endPoll: false, preview: true});
             }
         }
     }
 
     onPromoCodeEnter(promo) {
-        this.setState({promoCode: promo});
+        this.setState({promoCode: promo,showReceipt: false });
     }
 
     onBeginRide() {
@@ -74,14 +75,15 @@ export class Rider extends Component{
             .then((res)=> {
                 res.json()
                     .then((resJson) => {
-                        this.setState({fare: resJson.fare});
+                        this.setState({fare: resJson.fare ,showReceipt: false});
                     });
                 const pollFun = setInterval(this.pollForDriver, 1000);
-                this.setState({preview: false, searchingDriver: true, pollFun: pollFun});
+                this.setState({showReceipt: false , preview: false, searchingDriver: true, endPoll: false, pollFun: pollFun});
             });
     }
 
     pollForDriver() {
+        console.log ("Receipt " + this.state.showReceipt);
         // Notif?
         let count = this.state.pollCount;
         if(this.state.showReceipt) {    //  Ride ended
@@ -98,50 +100,61 @@ export class Rider extends Component{
                                 clearInterval(this.state.pollFun);
                                 this.setState({
                                     preview: false, rideRunning: true, searchingDriver: false,
-                                    driverName: resJson
+                                    driverName: resJson,showReceipt: false
                                 });
                                 console.log("driver received");
 
                                 // poll to ask if the ride ended
                                 const ridePoll = setInterval(this.pollForDriver, 1000);
-                                this.setState({pollFun: ridePoll});
+                                this.setState({pollFun: ridePoll,showReceipt: false});
                             });
-                    } else if (res.status === 404) {    // Ride running and waiting for end
+                    } else if (res.status === 404) {
                         res.json().then((json) => {
                                 if (json.noRide !== undefined) {
-                                    if (json.noRide) {
-                                        clearInterval(this.state.pollFun);
+                                    if (json.noRide && !this.state.endPoll) { // did not find ride
                                         this.setState({
                                             isProcessingRide: false,
                                             isStartLoc: false,
                                             preview: false,
-                                            startLoc: null,
-                                            endLoc: null,
                                             promoCode: null,
                                             rideRunning: false,
-                                            showReceipt: true,
-                                            searchingDriver: false,
-                                            pollCount: 0,
-                                            pollFun: null
+                                            showReceipt: false,
+                                            searchingDriver: true,
                                         });
                                     }
+                                    else {
+                                        if (!this.state.endPoll)//ended
+                                        {
+                                        console.log ("now");
+                                        this.setState({
+                                            preview: false,
+                                            rideRunning: false,
+                                            searchingDriver: false,
+                                            isProcessingRide: false,
+                                            isStartLoc: false,
+                                            showReceipt: true,
+                                        });}
+                                }
+
                                 }
                             }
                         );
                     }
+
                 });
-            if (this.state.pollCount > 30) {
-                clearInterval(this.state.pollFun);
+            if (this.state.pollCount > 10) {
                 this.setState({
                     isProcessingRide: false,
                     isStartLoc: false,
                     preview: false,
                     rideRunning: false,
                     showReceipt: false,
-                    searchingDriver: false
+                    searchingDriver: false,
+                    endPoll: true
                 });
+                clearInterval(this.state.pollFun);
             }
-            this.setState({pollCount: ++count});
+            this.setState({showReceipt: false, pollCount: ++count});
         }
     }
 
@@ -220,15 +233,18 @@ export class Rider extends Component{
                     <div className="col-4"/>
                 </div>;
         }
-        else if(this.state.searchingDriver) {
+        else
+            if(this.state.searchingDriver)
+            {
             searchingDriver = <div className="row fixed-bottom mb-5">
                 <div className="col-3"/>
                 <ProgressBar className="col-6"/>
                 <div className="col-3"/>
             </div>;
-        }
-        else if(this.state.showReceipt) {
-
+             }
+        else
+            if(this.state.showReceipt) {
+                console.log ("Showing Receipt");
             receiptCard =
                 <div className="row fixed-bottom mb-5">
                     <div className="col-4"/>

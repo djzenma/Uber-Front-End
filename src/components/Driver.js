@@ -27,7 +27,7 @@ export class Driver extends Component {
                 endLoc : null,
                 riderName: "",
                 acceptingRides:false,
-                marker : false ,
+                marker : true ,
                 rideid : "",
                 arrivedRider : false ,
                 endedRide : false ,
@@ -104,17 +104,7 @@ export class Driver extends Component {
 
 
         this.setState({pollCount: ++count});
-        if(this.state.pollCount > 10) {
-            clearInterval(this.state.pollFun);
-            this.setState({
-                acceptingRides:true,
-                arrivedRider : false ,
-                marker : false ,
-                endedRide : false ,
-                cancelledRide:false ,
-                foundRide : false ,
-            });
-        }
+
 
     }
 
@@ -289,7 +279,7 @@ export class Driver extends Component {
                         <div className="col-4">
                         </div>{/*col*/}
                         <div className="col-4 mt-5">
-                            <Alert variant="primary">
+                            <Alert hidden = {!this.state.marker} variant="primary">
                                 Select Your current Location!
                             </Alert>
                         </div>
