@@ -14,15 +14,15 @@ export default class RidesHistory extends Component{
                 <Card key={index} className="w-50 mt-3 mx-auto">
                     <Card.Body>
                         <Card.Title>
-                            <span className="text-info">Ride Date</span>: {ride.date}
+                            <span className="text-info">Ride Date</span>: {this.props.rides[index].ridedate.substr(0,10)}
                         </Card.Title>
                         <Card.Text>
-                            <span className="text-primary">Driver</span>: {ride.driverName}<br/>
-                            <span className="text-primary">Fare</span>: {ride.fare}EGP
+                            <span className="text-primary">Driver</span>: {this.props.rides[index].driveremail}<br/>
+                            <span className="text-primary">Rider</span>: {this.props.rides[index].rideremail}<br/>
+                            <span className="text-primary">Start Location</span>: {this.props.rides[index].fare_s}
+                            <span className="text-primary">End Location</span>: {this.props.rides[index].fare_e}
                         </Card.Text>
-                        <Card.Footer>
-                            <span className="text-danger">Status</span>: {ride.status}
-                        </Card.Footer>
+
                     </Card.Body>
                 </Card>
             );

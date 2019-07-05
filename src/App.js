@@ -10,6 +10,8 @@ import {Driver} from './Components/Driver';
 import {GoogleApiWrapper} from "google-maps-react";
 import LeftDrawer from "./Components/LeftDrawer";
 import Admin from './Components/Admin';
+import MyForm from "./Components/MyForm";
+import {Paper} from "@material-ui/core";
 
 const path = require('path');
 
@@ -28,6 +30,11 @@ class App extends Component{
         this.onSignUp = this.onSignUp.bind(this);
         this.onRedirectToSignIn = this.onRedirectToSignIn.bind(this);
         this.onRedirectToSignUp = this.onRedirectToSignUp.bind(this);
+        this.onFavplacesClicked = this.onFavplacesClicked.bind(this);
+        this.addFav = this.addFav.bind(this);
+        this.removeFav = this.removeFav.bind(this);
+        this.getHistory = this.getHistory.bind(this);
+
 
         this.state = {
             login: true,
@@ -35,12 +42,80 @@ class App extends Component{
             rider: false,
             driver: false,
             profile: false,
+            favPlaces : false ,
             admin: false,
             ridesHistory: false,
             role: 'rider',
+            ride : [],
             profileInfo: {}
         };
     }
+    getHistory()
+    {
+        const body = {
+            email :this.state.profileInfo.email,
+        };
+        const url = 'http://localhost:3000/auth/history';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
+            .then((res)=> {
+                res.json()
+                    .then((resJson)=> {
+                        this.setState({ride : resJson});
+                        console.log (this.state.ride[0].rideremail);
+                    });
+            }).catch((er)=> console.log(er));
+    }
+    addFav(inputs)
+    {
+        const body = {
+          email :this.state.profileInfo.email,
+          fav :inputs[0].input
+        };
+        const url = 'http://localhost:3000/auth/favAdd';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
+            .then((res)=> {
+                if (res.status === 200) {
+                    console.log ("Fav Place Added");
+                }
+                else
+                    console.log ("Error Adding Fav Place");
+                });
+    }
+    removeFav(inputs)
+    {
+        const body = {
+          email :this.state.profileInfo.email,
+          fav :inputs[0].input,
+        };
+        const url = 'http://localhost:3000/auth/favRemove';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
+            .then((res)=> {
+                if (res.status === 200) {
+                    console.log ("Fav Place Removed");
+                }
+                else
+                    console.log ("Error Removing Fav Place");
+                });
+    }
+
 
     onMapClick() {
         if(this.state.role === 'rider')
@@ -73,6 +148,22 @@ class App extends Component{
                 profile: false,
                 ridesHistory: false
             });
+    }
+
+    onFavplacesClicked()
+    {
+        console.log ("Clicked On Fav Places");
+        this.setState({
+            login: false,
+            signUp: false,
+            rider: false,
+            driver: false,
+            admin: false,
+            profile: false,
+            favPlaces : true ,
+            ridesHistory: false,
+
+        });
     }
 
     onRiderProfileClick() {
@@ -243,7 +334,7 @@ class App extends Component{
         let page;
 
         let cancelFee = 10;
-        let rides = [
+       /* let rides = [
             {   date: '24/06/19',
                 driverName: 'Soko Loko',
                 fare: 60,
@@ -254,7 +345,7 @@ class App extends Component{
                 fare: 10,
                 status: 'Cancelled because of terrifying driver name'
             }
-        ];
+        ];*/
 
         if(this.state.login)
             page = <SignIn onLogin={this.onLogin} onRedirectToSignUp={this.onRedirectToSignUp}/>;
@@ -268,45 +359,88 @@ class App extends Component{
                     <div className="row m-3">
                         <LeftDrawer className="col" onMyProfileClick={this.onRiderProfileClick}
                                     onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
-                                    onMapClick={this.onMapClick}/>
+                                    onMapClick={this.onMapClick}
+                                    onFavplacesClicked = {this.onFavplacesClicked}
+                        />
                     </div>
                     <Profile baseUrl={baseUrl} role={this.state.role} profile={this.state.profileInfo}/>
                 </div>;
 
-        else if(this.state.ridesHistory)
+        else if(this.state.ridesHistory) {
+            this.getHistory();
             page =
                 <div className="container-fluid">
                     <div className="row m-3">
                         <LeftDrawer className="col" onMyProfileClick={this.onRiderProfileClick}
                                     onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
-                                    onMapClick={this.onMapClick}/>
+                                    onMapClick={this.onMapClick}
+                                    onFavplacesClicked={this.onFavplacesClicked}
+                        />
                     </div>
-                    <RidesHistory className="clearfix" rides={rides}/>
+                    <RidesHistory className="clearfix" rides={this.state.ride}/>
                 </div>;
+        }
+        else if (this.state.favPlaces)
+        {
+            console.log ("Processing Favs");
+            {/* Add Fav Place*/}
+            page =
+                <div className="FavPage">
+                <div className="container-fluid">
+                    <div className="row m-3">
+                        <LeftDrawer className="col" onMyProfileClick={this.onRiderProfileClick}
+                                    onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
+                                    onMapClick={this.onMapClick}
+                                    onFavplacesClicked = {this.onFavplacesClicked}
+                        />
+                    </div>
+                    <div className="row m-5 "/>
+                    <div className="row m-5"/>
+                    <div className="row m-5"/>
+                    <div className="row m-5"/>
+                    <div className="row m-5"/>
+                    <div className="row m-5"/>
+                    <div className="row m-5">
+                    <MyForm  heading="Add Favorite" formGroups={[
+                        {id:"formBasicPlace", type: "place", placeHolder: "Enter Favorite Place"},]}
+                            btnColor="primary"  btnTxt="Add"  onClickingbutton = {this.addFav}/>
 
-        else if(this.state.rider)
+                    <MyForm  heading="Remove Favorite" formGroups={[
+                        {id:"formBasicPlace", type: "place", placeHolder: "Enter Favorite Place"},]}
+                            btnColor="danger"  btnTxt="Remove"  onClickingbutton = {this.removeFav}/>
+                    </div>
+                </div>
+                </div>
+
+        }
+        else if(this.state.rider) {
             page = <Rider riderProfile={this.state.profileInfo}
                           cancelFee={cancelFee}
                           leftDrawer={<LeftDrawer onMyProfileClick={this.onRiderProfileClick}
                                                   onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
-                                                  onMapClick={this.onMapClick}/>}
+                                                  onMapClick={this.onMapClick}
+                                                  onFavplacesClicked={this.onFavplacesClicked}
+                          />}
             />;
-
-        else if(this.state.driver)
+        }
+        else if(this.state.driver) {
+            console.log ("Credit In App:" + this.state.profileInfo.credit);
             page =
                 <div>
-                    <Driver  profile={this.state.profileInfo}/>
+                    <Driver profile={this.state.profileInfo}/>
                     <div className="container-fluid fixed-top mt-3">
                         <div className="row">
                             <div className="col-1">
                                 <LeftDrawer onMyProfileClick={this.onRiderProfileClick}
                                             onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
-                                            onMapClick={this.onMapClick}/>
+                                            onMapClick={this.onMapClick}
+                                            onFavplacesClicked={this.onFavplacesClicked}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>;
-
+        }
         else if(this.state.admin)
             page = <Admin profile={this.state.profileInfo} baseUrl={baseUrl}/>;
 

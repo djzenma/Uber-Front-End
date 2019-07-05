@@ -84,3 +84,7 @@
   background-size: cover;
   background: url("https://source.unsplash.com/random"), no-repeat, center;
 }
+
+.FavPage{
+  background-image: url(img.jpg);
+}

@@ -20,9 +20,12 @@ export class Driver extends Component {
         this.onArrivedRider = this.onArrivedRider.bind(this);
         this.pollForRide = this.pollForRide.bind(this);
         this.onAcceptingRides = this.onAcceptingRides.bind(this);
+        this.setAvailability = this.setAvailability.bind(this);
+
 
         this.state =
             {
+                initialization : true ,
                 startLoc: null,
                 endLoc : null,
                 riderName: "",
@@ -35,25 +38,76 @@ export class Driver extends Component {
                 foundRide: false,
                 pollCount: 0,
                 pollFun: null,
-                fare :null
+                fare :null,
+                availability : 0 ,
             };
+
     }
 
+  setAvailability ()
+  {
+      const body = {
+          driverEmail: this.props.profile.email,
+          availability : this.state.availability,
+      };
+      const url = 'http://localhost:3000/driver/availability';
+      fetch( url,
+          { method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(body)
+          })
+          .then((res)=> {
+              if(res.status === 200) {
+                console.log ("Driver is not available So Far")
+              }
+              else
+                  console.log ("Availability Error");
+
+          });
+
+
+  }
 
     onMarkerClicked(area)
     {
-        this.setState({
-            startLoc: area.name ,
-            endLoc : null,
-            pollCount: 0,
-            pollFun: null,
-            acceptingRides:true,
-            arrivedRider : false ,
-            endedRide : false ,
-            marker : true ,
-            cancelledRide:false ,
-            foundRide: false});
-        this.onAcceptingRides();
+        this.setState({availability : 1});
+        const body = {
+            driverEmail: this.props.profile.email,
+            availability : this.state.availability,
+        };
+        const url = 'http://localhost:3000/driver/availability';
+        fetch( url,
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
+            .then((res)=> {
+                if(res.status === 200) {
+                this.setState({
+                    startLoc: area.name,
+                    endLoc: null,
+                    pollCount: 0,
+                    pollFun: null,
+                    acceptingRides: true,
+                    arrivedRider: false,
+                    endedRide: false,
+                    marker: true,
+                    cancelledRide: false,
+                    foundRide: false
+                });
+
+                this.onAcceptingRides();
+            }
+                else
+                    console.log ("Availability Error");
+
+            });
+
+
     }
 
     onAcceptingRides(){
@@ -189,11 +243,17 @@ export class Driver extends Component {
     }
 
     render(){
+
         let msg ;
         let msg2 ;
         let msg3 ;
         let msg4 ;
-
+        let msg5 ;
+        if (this.state.initialization)
+        {
+            msg5 =
+                this.setAvailability ();
+        }
         if (this.state.endedRide)
         {
             msg3 =
@@ -212,6 +272,7 @@ export class Driver extends Component {
         else
         if (this.state.acceptingRides && this.state.marker)
         {
+
             msg2=
                 <div className="row fixed-bottom mb-5" hidden={!this.state.acceptingRides}>
                     <div className="col-4">
@@ -265,7 +326,7 @@ export class Driver extends Component {
 
 
         return (
-            <div className="App">
+        <div className="App">
 
                 {/*The Map*/}
                 <MapContainer className="map"
@@ -289,12 +350,12 @@ export class Driver extends Component {
                         <div className="col-2">
                         </div>{/*col*/}
                     </div>{/*row*/}
-                    {msg}
-
                 </div>
+                {msg}
                 {msg2}
                 {msg3}
                 {msg4}
+                {msg5}
             </div>
         );
     }
