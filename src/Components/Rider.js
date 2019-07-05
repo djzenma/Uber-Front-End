@@ -24,7 +24,7 @@ export class Rider extends Component{
             preview: false,
             startLoc: null,
             endLoc: null,
-            promoCode: null,
+            promoCode: "",
             rideRunning: false,
             showReceipt: false,
             searchingDriver: false,
@@ -34,6 +34,7 @@ export class Rider extends Component{
             pollCount: 0,
             pollFun: null
         };
+        console.log("Credit: " + this.props.riderProfile.credit);
     }
 
     onRideClick() {
@@ -42,6 +43,7 @@ export class Rider extends Component{
     };
 
     onMarkerClicked(area) {
+
         if (this.state.isProcessingRide) {
             if (this.state.isStartLoc) {
                 this.setState({isProcessingRide: true,showReceipt: false, isStartLoc: false, preview: false, endPoll: false, startLoc: area});
@@ -62,7 +64,8 @@ export class Rider extends Component{
         const body = {
             startLoc: this.state.startLoc.name,
             endLoc: this.state.endLoc.name,
-            profile: this.props.riderProfile
+            profile: this.props.riderProfile,
+            promocode :  this.state.promoCode
         };
         const url = 'http://localhost:3000/ride';
         fetch( url,
@@ -76,14 +79,14 @@ export class Rider extends Component{
                 res.json()
                     .then((resJson) => {
                         this.setState({fare: resJson.fare ,showReceipt: false});
-                    });
+                    })
+                    .catch(err => console.log(err));
                 const pollFun = setInterval(this.pollForDriver, 1000);
                 this.setState({showReceipt: false , preview: false, searchingDriver: true, endPoll: false, pollFun: pollFun});
             });
     }
 
     pollForDriver() {
-        console.log ("Receipt " + this.state.showReceipt);
         // Notif?
         let count = this.state.pollCount;
         if(this.state.showReceipt) {    //  Ride ended
@@ -102,7 +105,7 @@ export class Rider extends Component{
                                     preview: false, rideRunning: true, searchingDriver: false,
                                     driverName: resJson,showReceipt: false
                                 });
-                                console.log("driver received");
+                                console.log("Driver Found !!");
 
                                 // poll to ask if the ride ended
                                 const ridePoll = setInterval(this.pollForDriver, 1000);
@@ -125,8 +128,7 @@ export class Rider extends Component{
                                     else {
                                         if (!this.state.endPoll)//ended
                                         {
-                                        console.log ("now");
-                                        this.setState({
+                                            this.setState({
                                             preview: false,
                                             rideRunning: false,
                                             searchingDriver: false,
@@ -142,7 +144,7 @@ export class Rider extends Component{
                     }
 
                 });
-            if (this.state.pollCount > 10) {
+            if (this.state.pollCount > 30) {
                 const body = {
                     startLoc: this.state.startLoc.name,
                     endLoc: this.state.endLoc.name,
@@ -176,12 +178,11 @@ export class Rider extends Component{
     }
 
     onCancelRide() {
-        console.log('cancel');
         const url = `http://localhost:3000/rider/cancel/plz?email=${this.props.riderProfile.email}&sLoc=${this.state.startLoc.name}&eLoc=${this.state.endLoc.name}`;
         fetch( url, { method: 'GET'})
             .then((res) => {
                 if(res.status === 200) {
-                    console.log('cancel requested');
+                    console.log('Cancel Requested Pending...');
                     res.json().then((json)=> {
                         this.setState({rideRunning: false, showReceipt: true, cancelFee: json.cancelFee });
                     });
@@ -206,7 +207,6 @@ export class Rider extends Component{
     render() {
         let targetLoc, previewCard = "", btnTxt = "Start a ride!", rideCard, receiptCard, searchingDriver= null;
 
-        console.log(this.state.searchingDriver);
         if(this.state.isProcessingRide && this.state.isStartLoc) {  // Choosing a starting location
             targetLoc = "Starting";
         }
@@ -234,7 +234,7 @@ export class Rider extends Component{
                     <Card className="col-4">
                         <Card.Body>
                             <Card.Title>
-                                Nice Ride!
+                                Found Your Ride !
                             </Card.Title>
                             <Card.Header>
                                 Driver: {this.state.driverName}
@@ -314,7 +314,6 @@ export class Rider extends Component{
                                 </Alert>
                             </div>
                         </div>
-
                         {/*Welcome Card*/}
                         <div className="col-3 mt-5">
                             <WelcomeCard name={this.props.riderProfile.name} age={this.props.riderProfile.age} credit={this.props.riderProfile.credit}/>

@@ -9,11 +9,13 @@ export default class MyForm extends Component {
         super(props);
         this.displayFormGroups = this.displayFormGroups.bind(this);
         this.inputChange = this.inputChange.bind(this) ;
+        this.onChange = this.onChange.bind(this) ;
 
         const forms = this.displayFormGroups();
         this.state = {
             inputs: forms[1],
-            forms: forms[0]
+            forms: forms[0],
+            expanded: false
         };
     }
 
@@ -21,12 +23,12 @@ export default class MyForm extends Component {
         let inputs = [];
         let form = this.props.formGroups.map((group, index) => {
             inputs.push({id: group.id, input: ''});
-           return (
-               <Form.Group controlId={group.id} key={group.id}>
-                   <Form.Label>{group.label}</Form.Label>
-                   <Form.Control type={group.type} placeholder={group.placeHolder} onChange = {(e)=>this.inputChange(e, group.id)} />
-               </Form.Group>
-           );
+            return (
+                <Form.Group controlId={group.id} key={group.id}>
+                    <Form.Label>{group.label}</Form.Label>
+                    <Form.Control type={group.type} placeholder={group.placeHolder} onChange = {(e)=>this.inputChange(e, group.id)} />
+                </Form.Group>
+            );
         });
 
         return [form, inputs];
@@ -48,10 +50,14 @@ export default class MyForm extends Component {
         // this.setState({input[id]: e.target.value});
     }
 
+    onChange(e, expanded) {
+        this.setState({expanded: expanded});
+    }
+
     render() {
         return (
             <div className="w-100 mb-3">
-                <ExpansionPanel>
+                <ExpansionPanel expanded={this.state.expanded} onChange={this.onChange}>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -65,6 +71,7 @@ export default class MyForm extends Component {
                             <Button variant={this.props.btnColor} type="submit"   onClick={(e)=>{
                                 e.preventDefault(); //does not go back to login page
                                 this.props.onClickingbutton(this.state.inputs);
+                                this.setState({expanded: false});
                             }}>
                                 {this.props.btnTxt}
                             </Button>

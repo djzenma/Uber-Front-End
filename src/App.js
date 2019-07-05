@@ -104,10 +104,10 @@ class App extends Component{
         fetch( url,
             { method: 'POST',
                 headers: {
-                'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(credentials)}
-                )
+        )
             .then((res)=> {
                 res.json()
                     .then((resJson)=> {
@@ -171,48 +171,48 @@ class App extends Component{
                 },
                 body: JSON.stringify(credentials)}
         )
-        .then((res)=> {
-            if(res.status === 200) {
-                credentials.age = new Date().getFullYear() - parseInt(credentials.bdate.substr(0,4));
-                const role = credentials.role;
-                if(role === 'rider')
-                    this.setState({
-                        login: false,
-                        signUp: false,
-                        rider: true,
-                        driver: false,
-                        admin: false,
-                        profile: false,
-                        ridesHistory: false,
-                        role: role,
-                        profileInfo: credentials
-                    });
-                else if(role === 'driver')
-                    this.setState({
-                        login: false,
-                        signUp: false,
-                        rider: false,
-                        driver: true,
-                        admin: false,
-                        profile: false,
-                        ridesHistory: false,
-                        role: role,
-                        profileInfo: credentials
-                    });
-                else
-                    this.setState({
-                        login: false,
-                        signUp: false,
-                        rider: false,
-                        driver: false,
-                        admin: true,
-                        profile: false,
-                        ridesHistory: false,
-                        role: role,
-                        profileInfo: credentials
-                    });
-            }
-        });
+            .then((res)=> {
+                if(res.status === 200) {
+                    credentials.age = new Date().getFullYear() - parseInt(credentials.bdate.substr(0,4));
+                    const role = credentials.role;
+                    if(role === 'rider')
+                        this.setState({
+                            login: false,
+                            signUp: false,
+                            rider: true,
+                            driver: false,
+                            admin: false,
+                            profile: false,
+                            ridesHistory: false,
+                            role: role,
+                            profileInfo: credentials
+                        });
+                    else if(role === 'driver')
+                        this.setState({
+                            login: false,
+                            signUp: false,
+                            rider: false,
+                            driver: true,
+                            admin: false,
+                            profile: false,
+                            ridesHistory: false,
+                            role: role,
+                            profileInfo: credentials
+                        });
+                    else
+                        this.setState({
+                            login: false,
+                            signUp: false,
+                            rider: false,
+                            driver: false,
+                            admin: true,
+                            profile: false,
+                            ridesHistory: false,
+                            role: role,
+                            profileInfo: credentials
+                        });
+                }
+            });
     }
 
     onRedirectToSignIn() {
@@ -242,13 +242,6 @@ class App extends Component{
     render() {
         let page;
 
-        let driverProfile = {
-            name: "3ala2 el 7ara2",
-            age: 70,
-            credit: -2,
-            email: '7ara2@aucegypt.edu',
-            birthDate: '05/12/97'
-        };
         let cancelFee = 10;
         let rides = [
             {   date: '24/06/19',
@@ -277,7 +270,7 @@ class App extends Component{
                                     onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
                                     onMapClick={this.onMapClick}/>
                     </div>
-                    <Profile profile={this.state.profileInfo}/>
+                    <Profile baseUrl={baseUrl} role={this.state.role} profile={this.state.profileInfo}/>
                 </div>;
 
         else if(this.state.ridesHistory)
@@ -295,9 +288,9 @@ class App extends Component{
             page = <Rider riderProfile={this.state.profileInfo}
                           cancelFee={cancelFee}
                           leftDrawer={<LeftDrawer onMyProfileClick={this.onRiderProfileClick}
-                                                   onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
+                                                  onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
                                                   onMapClick={this.onMapClick}/>}
-                    />;
+            />;
 
         else if(this.state.driver)
             page =
@@ -307,15 +300,15 @@ class App extends Component{
                         <div className="row">
                             <div className="col-1">
                                 <LeftDrawer onMyProfileClick={this.onRiderProfileClick}
-                                        onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
-                                        onMapClick={this.onMapClick}/>
+                                            onMyRidesHistoryClick={this.onRiderRidesHistoryClick}
+                                            onMapClick={this.onMapClick}/>
                             </div>
                         </div>
                     </div>
                 </div>;
 
         else if(this.state.admin)
-            page = <Admin profile={this.state.profileInfo}/>;
+            page = <Admin profile={this.state.profileInfo} baseUrl={baseUrl}/>;
 
         return (
             <div className="App">

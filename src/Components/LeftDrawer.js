@@ -25,7 +25,7 @@ export default class LeftDrawer extends Component {
 
         this.state = {
             left: false,
-            drawerList: ["My Map", "My Profile", "My Rides History"]
+            drawerList: ["My Map", "My Profile", "My Rides History" , "Fav Places"]
         }
     }
 
@@ -36,8 +36,11 @@ export default class LeftDrawer extends Component {
                     this.props.onMapClick();
                 else if(index === 1)
                     this.props.onMyProfileClick();
-                else
+                else if (index === 2)
                     this.props.onMyRidesHistoryClick();
+                else
+                     this.props.onFavplacesClicked();
+
             }}>
                 <ListItemText primary={text}/>
             </ListItem>);

@@ -67,7 +67,6 @@ export class Driver extends Component {
     pollForRide() {
         let count = this.state.pollCount;
         let pollFun = this.state.pollFun;
-        console.log(pollFun);
 
         const body = {
             driverEmail: this.props.profile.email,
