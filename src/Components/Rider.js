@@ -143,15 +143,32 @@ export class Rider extends Component{
 
                 });
             if (this.state.pollCount > 10) {
-                this.setState({
-                    isProcessingRide: false,
-                    isStartLoc: false,
-                    preview: false,
-                    rideRunning: false,
-                    showReceipt: false,
-                    searchingDriver: false,
-                    endPoll: true
-                });
+                const body = {
+                    startLoc: this.state.startLoc.name,
+                    endLoc: this.state.endLoc.name,
+                    profile: this.props.riderProfile
+                };
+                const url = 'http://localhost:3000/ride/nodriver';
+                fetch( url,
+                    { method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(body)
+                    })
+                    .then((res)=> {
+                        if(res.status === 200) { //successfully removed ride from db
+                            this.setState({
+                                isProcessingRide: false,
+                                isStartLoc: false,
+                                preview: false,
+                                rideRunning: false,
+                                showReceipt: false,
+                                searchingDriver: false,
+                                endPoll: true
+                            });
+                        }
+                    });
                 clearInterval(this.state.pollFun);
             }
             this.setState({showReceipt: false, pollCount: ++count});
