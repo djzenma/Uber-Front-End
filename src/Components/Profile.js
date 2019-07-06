@@ -18,8 +18,11 @@ export default class Profile extends Component{
                 name: false,
                 birthDate: false
             },
-            newPass: ''
+            newPass: this.props.profile.passcode,
+            name: this.props.profile.name,
+            birth: this.props.profile.birthDate.substr(0,10)
         };
+
     }
 
     onProfileChange(field) {
@@ -31,7 +34,8 @@ export default class Profile extends Component{
 
     onSubmit() {
         const url = this.props.baseUrl + '/' + this.props.role + '/modify';
-        const body = {email: this.props.profile.email, password: this.state.newPass,
+        const pass = (this.state.newPass === undefined)? this.props.profile.passcode : this.state.newPass;
+        const body = {email: this.props.profile.email, password: pass,
                         birth: this.state.birth, name: this.state.name};
         const onSuccess = () => {
             console.log("Profile Info Updated!");
@@ -135,7 +139,11 @@ export default class Profile extends Component{
                                 {/*New Password*/}
                                 <Form.Group controlId="newPass">
                                     <Form.Control type="password" placeholder="Enter new password" onChange={(e) => {
-                                        this.setState({newPass: e.target.value});
+                                        console.log(e.target.value);
+                                        if(this.state.modifyInputFields.password && e.target.value !== undefined)
+                                            this.setState({newPass: e.target.value});
+                                        else
+                                            this.setState({newPass: this.props.profile.passcode});
                                     }}/>
                                 </Form.Group>
                             </div>
