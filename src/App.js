@@ -347,18 +347,6 @@ class App extends Component{
         let page;
 
         let cancelFee = 10;
-       /* let rides = [
-            {   date: '24/06/19',
-                driverName: 'Soko Loko',
-                fare: 60,
-                status: 'Finished'
-            },
-            {   date: '25/06/19',
-                driverName: 'Safa7 Embaba',
-                fare: 10,
-                status: 'Cancelled because of terrifying driver name'
-            }
-        ];*/
 
         if(this.state.login)
             page = <SignIn onLogin={this.onLogin} onRedirectToSignUp={this.onRedirectToSignUp}/>;
@@ -376,7 +364,7 @@ class App extends Component{
                                     onFavplacesClicked = {this.onFavplacesClicked}
                         />
                     </div>
-                    <Profile baseUrl={baseUrl} role={this.state.role} profile={this.state.profileInfo}/>
+                    <Profile baseUrl={baseUrl} role={this.state.role} profile={this.state.profileInfo} redirectToMap={this.onMapClick}/>
                 </div>;
 
         else if(this.state.ridesHistory) {

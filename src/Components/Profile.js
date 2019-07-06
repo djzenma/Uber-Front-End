@@ -8,7 +8,7 @@ export default class Profile extends Component{
         super(props);
 
         this.onProfileChange = this.onProfileChange.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.send = this.send.bind(this);
 
         this.state = {
@@ -29,11 +29,15 @@ export default class Profile extends Component{
         });
     }
 
-    onChangePassword() {
+    onSubmit() {
         const url = this.props.baseUrl + '/' + this.props.role + '/modify';
-        const body = {email: this.props.profile.email, password: this.state.newPass};
-        const onSuccess = () => {console.log(this.props.profile.email + "'s Password Changed!")};
-        const onFalure = () => {console.log("Failed to Change your Password!")};
+        const body = {email: this.props.profile.email, password: this.state.newPass,
+                        birth: this.state.birth, name: this.state.name};
+        const onSuccess = () => {
+            console.log("Profile Info Updated!");
+            this.props.redirectToMap();
+        };
+        const onFalure = () => {console.log("Failed to Update your profile!")};
         this.send(url, body, 'PUT', onSuccess, onFalure);
     }
 
@@ -62,12 +66,14 @@ export default class Profile extends Component{
                                 onClick={() => this.onProfileChange('password')}>Change my password</Button>;
 
 
-        if(this.state.modifyInputFields.email)
-            emailField = <Form.Control type="email" placeholder={this.props.profile.email}/>;
         if(this.state.modifyInputFields.name)
-            nameField = <Form.Control placeholder={this.props.profile.name}/>;
+            nameField = <Form.Control placeholder={this.props.profile.name} onChange={(e) => {
+                this.setState({name: e.target.value});
+            }}/>;
         if(this.state.modifyInputFields.birthDate)
-            birthdateField = <Form.Control placeholder={this.props.profile.birthDate}/>;
+            birthdateField = <Form.Control placeholder={this.props.profile.birthDate} onChange={(e) => {
+                this.setState({birth: e.target.value});
+            }}/>;
 
 
         return (
@@ -111,9 +117,6 @@ export default class Profile extends Component{
                                     Email
                                 </Form.Label>
                                 {emailField}
-                                <InputGroup.Append>
-                                    <Button onClick={() => this.onProfileChange('email')}>Change</Button>
-                                </InputGroup.Append>
                             </InputGroup>
 
                             <Divider/>
@@ -125,12 +128,12 @@ export default class Profile extends Component{
                             <div className="mt-3" hidden={!this.state.modifyInputFields.password}>
 
                                 {/*Old Password*/}
-                                <Form.Group controlId="formBasicEmail">
+                                <Form.Group controlId="oldPass">
                                     <Form.Control type="password" placeholder="Enter old password" />
                                 </Form.Group>
 
                                 {/*New Password*/}
-                                <Form.Group controlId="formBasicEmail">
+                                <Form.Group controlId="newPass">
                                     <Form.Control type="password" placeholder="Enter new password" onChange={(e) => {
                                         this.setState({newPass: e.target.value});
                                     }}/>
@@ -138,7 +141,7 @@ export default class Profile extends Component{
                             </div>
 
                             <Button className="d-block mx-auto mt-3" variant="primary" type="submit" onClick={(e) => {
-                                this.onChangePassword();
+                                this.onSubmit();
                                 e.preventDefault();
                             }}>
                                 Submit
