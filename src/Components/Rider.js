@@ -290,7 +290,7 @@ export class Rider extends Component{
                                 Driver: {this.state.driverName}
                             </Card.Header>
                             <Card.Text>
-                                Payment: { payment }
+                                Payment: { payment }EGP
                             </Card.Text>
                             <Card.Footer>
                                 <Button variant="primary" onClick={this.onDismissClick}>Dismiss</Button>

@@ -10,8 +10,8 @@ class PreviewRide extends Component {
                     <Card.Body>
                         <Card.Title>Preview Ride</Card.Title>
                         <Card.Text>
-                            Start: {this.props.startLoc.lat}, {this.props.startLoc.lng}<br/>
-                            End: {this.props.endLoc.lat}, {this.props.endLoc.lng}<br/>
+                            Start: {this.props.startLoc.name}<br/>
+                            End: {this.props.endLoc.name}<br/>
                             <FormControl placeholder="Enter Promo Code" onChange={(e) => this.props.onPromoCodeChange(e.target.value)}/>
                         </Card.Text>
                         <Card.Footer>
