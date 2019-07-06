@@ -34,6 +34,7 @@ class App extends Component{
         this.addFav = this.addFav.bind(this);
         this.removeFav = this.removeFav.bind(this);
         this.getHistory = this.getHistory.bind(this);
+        this.onPassReset = this.onPassReset.bind(this);
 
 
         this.state = {
@@ -343,13 +344,25 @@ class App extends Component{
         });
     }
 
+    onPassReset(info) {
+        console.log(info);
+        const url = 'http://localhost:3000/reset/account?email=' + info.email +'&role=' + info.role ;
+        fetch( url,
+            { method: 'GET'}
+            )
+            .then((res)=> {
+                if(res.status === 200)
+                    console.log("Password sent to your email");
+            });
+    }
+
     render() {
         let page;
 
         let cancelFee = 10;
 
         if(this.state.login)
-            page = <SignIn onLogin={this.onLogin} onRedirectToSignUp={this.onRedirectToSignUp}/>;
+            page = <SignIn onLogin={this.onLogin} onRedirectToSignUp={this.onRedirectToSignUp} onPassReset={this.onPassReset}/>;
 
         else if(this.state.signUp)
             page = <SignUp onSignUp={this.onSignUp} onRedirectToSignIn={this.onRedirectToSignIn}/>;

@@ -166,7 +166,7 @@ export default function SignInSide(params) {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link href="#" variant="body2" onClick={() => params.onPassReset(value)}>
                                     Forgot password?
                                 </Link>
                             </Grid>
