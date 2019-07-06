@@ -76,13 +76,21 @@ export class Rider extends Component{
             body: JSON.stringify(body)
             })
             .then((res)=> {
-                res.json()
-                    .then((resJson) => {
-                        this.setState({fare: resJson.fare ,showReceipt: false});
-                    })
-                    .catch(err => console.log(err));
-                const pollFun = setInterval(this.pollForDriver, 1000);
-                this.setState({showReceipt: false , preview: false, searchingDriver: true, endPoll: false, pollFun: pollFun});
+                if(res.status === 200) {
+                    res.json()
+                        .then((resJson) => {
+                            this.setState({fare: resJson.fare, showReceipt: false});
+                        })
+                        .catch(err => console.log(err));
+                    const pollFun = setInterval(this.pollForDriver, 1000);
+                    this.setState({
+                        showReceipt: false,
+                        preview: false,
+                        searchingDriver: true,
+                        endPoll: false,
+                        pollFun: pollFun
+                    });
+                }
             });
     }
 
@@ -126,18 +134,16 @@ export class Rider extends Component{
                                         });
                                     }
                                     else {
-                                        if (!this.state.endPoll)//ended
-                                        {
-                                            this.setState({
-                                            preview: false,
-                                            rideRunning: false,
-                                            searchingDriver: false,
-                                            isProcessingRide: false,
-                                            isStartLoc: false,
-                                            showReceipt: true,
-                                        });}
-                                }
-
+                                        //ended
+                                        this.setState({
+                                        preview: false,
+                                        rideRunning: false,
+                                        searchingDriver: false,
+                                        isProcessingRide: false,
+                                        isStartLoc: false,
+                                        showReceipt: true,
+                                        });
+                                    }
                                 }
                             }
                         );
@@ -193,14 +199,19 @@ export class Rider extends Component{
 
     onDismissClick() {
         // Reset the screen
-        this.setState({isProcessingRide: false,
+        this.setState({
+            isProcessingRide: false,
             isStartLoc: false,
             preview: false,
             startLoc: null,
             endLoc: null,
-            promoCode: null,
+            promoCode: "",
             rideRunning: false,
-            showReceipt: false});
+            showReceipt: false,
+            searchingDriver: false,
+            endPoll: false,
+            pollCount: 0,
+            pollFun: null});
     }
 
     render() {
