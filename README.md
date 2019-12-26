@@ -1,4 +1,4 @@
-# Uber Front End
+# Uber-Like App Front End
 ### Project for the Fundamentals of Database Systems Course in The American University in Cairo
 Front End implemented in React.js and used Material Design for the design of the webpages.
 
